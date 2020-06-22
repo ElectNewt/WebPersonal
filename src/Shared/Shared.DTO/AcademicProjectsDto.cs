@@ -4,7 +4,6 @@ namespace WebPersonal.Shared.Dto
 {
     public class AcademicProjectsDto
     {
-
         public List<AcademicProjectDto> Projects { get; set; }
     }
     public class AcademicProjectDto

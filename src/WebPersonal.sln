@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackEnd", "BackEnd", "{8183
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.DTO", "Shared\Shared.DTO\Shared.DTO.csproj", "{BE192A5A-60A7-4E33-8D2D-1B3B6DE67EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.BackEnd.Data", "BackEnd\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj", "{28007523-F07C-413B-8999-61312E603B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.BackEnd.Data", "BackEnd\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj", "{28007523-F07C-413B-8999-61312E603B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.BackEnd.Model", "BackEnd\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj", "{AA004174-D873-4ADF-8D1A-23A8EFAA3D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.BackEnd.Model", "BackEnd\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj", "{AA004174-D873-4ADF-8D1A-23A8EFAA3D26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.BackEnd.Service", "BackEnd\WebPersonal.BackEnd.Service\WebPersonal.BackEnd.Service.csproj", "{9636E35A-4A7E-45CA-ADD8-6F309147D683}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{AA004174-D873-4ADF-8D1A-23A8EFAA3D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA004174-D873-4ADF-8D1A-23A8EFAA3D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA004174-D873-4ADF-8D1A-23A8EFAA3D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9636E35A-4A7E-45CA-ADD8-6F309147D683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9636E35A-4A7E-45CA-ADD8-6F309147D683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9636E35A-4A7E-45CA-ADD8-6F309147D683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9636E35A-4A7E-45CA-ADD8-6F309147D683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{BE192A5A-60A7-4E33-8D2D-1B3B6DE67EF4} = {55A09F36-365E-4216-A9D9-F3FA4D9B4A91}
 		{28007523-F07C-413B-8999-61312E603B8E} = {818303EF-4D00-4758-9196-382F23A7E02A}
 		{AA004174-D873-4ADF-8D1A-23A8EFAA3D26} = {818303EF-4D00-4758-9196-382F23A7E02A}
+		{9636E35A-4A7E-45CA-ADD8-6F309147D683} = {818303EF-4D00-4758-9196-382F23A7E02A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC029233-61A7-494D-B0D6-175DB6214669}

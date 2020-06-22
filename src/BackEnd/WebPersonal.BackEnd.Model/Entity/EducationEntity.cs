@@ -6,7 +6,7 @@ namespace WebPersonal.BackEnd.Model.Entity
     {
         public readonly int Id;
         public readonly DateTime StartDate;
-        public readonly DateTime? EndDate;
+        public readonly DateTime? EndDate; //Monad maybe?
         public readonly string CourseName;
         public readonly string UniversityName;
         private EducationEntity(int id, DateTime startDate, DateTime? endDate, string courseName, string universityName)
@@ -18,9 +18,9 @@ namespace WebPersonal.BackEnd.Model.Entity
             UniversityName = universityName;
         }
 
-        public static EducationEntity Create(int id, DateTime startDate, DateTime? endDate, string courseName, string universityName)
+        public EducationEntity UpdateEndDate(DateTime? endDate)
         {
-            return new EducationEntity(id, startDate, endDate, courseName, universityName);
+            return new EducationEntity(Id, StartDate, endDate, CourseName, UniversityName);
         }
     }
 }
