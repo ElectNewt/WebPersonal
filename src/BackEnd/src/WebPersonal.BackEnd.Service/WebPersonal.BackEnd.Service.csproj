@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>WebPersonal.BackEnd.Service</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shaered.ROP\Shared.ROP.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.DTO\Shared.DTO.csproj" />
+    <ProjectReference Include="..\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj" />
+    <ProjectReference Include="..\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj" />
+  </ItemGroup>
+
+</Project>

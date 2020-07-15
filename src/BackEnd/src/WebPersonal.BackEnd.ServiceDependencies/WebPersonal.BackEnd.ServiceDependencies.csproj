@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>WebPersonal.BackEnd.ServiceDependencies</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <nullable>enable</nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj" />
+    <ProjectReference Include="..\WebPersonal.BackEnd.Service\WebPersonal.BackEnd.Service.csproj" />
+  </ItemGroup>
+</Project>

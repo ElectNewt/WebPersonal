@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace WebPersonal.Shared.Dto
 {
     public class PersonalProjectsDto
     {
-       public List<PersonalProjectDto> PersonalProjects { get; set; }
+        public List<PersonalProjectDto> PersonalProjects { get; set; }
     }
 
-    public  class PersonalProjectDto
+    public class PersonalProjectDto
     {
         public int Id { get; set; }
         public string ProjectType { get; set; }
@@ -19,5 +17,5 @@ namespace WebPersonal.Shared.Dto
     }
 
 
-   
+
 }
