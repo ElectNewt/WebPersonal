@@ -15,7 +15,8 @@ namespace WebPersonal.BackEnd.Model.Repositories
 
         public override UserIdEntity Create(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            return UserIdEntity.Create(reader[nameof(UserIdEntity.UserName)].ToString() ?? "",
+               Convert.ToInt32(reader[nameof(PersonalProfileEntity.UserId)]));
         }
 
 
@@ -23,6 +24,7 @@ namespace WebPersonal.BackEnd.Model.Repositories
         {
             using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
             {
+                conexion.Open();
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conexion;
                 cmd.CommandText = $"select * from {TableName} where UserName = ?UserName";

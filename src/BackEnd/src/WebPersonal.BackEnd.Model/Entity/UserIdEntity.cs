@@ -5,10 +5,13 @@
         public readonly string UserName;
         public readonly int UserId;
 
-        public UserIdEntity(string userName, int userId)
+        private UserIdEntity(string userName, int userId)
         {
             UserName = userName;
             UserId = userId;
         }
+
+        public static UserIdEntity Create(string userName, int userId) =>
+            new UserIdEntity(userName, userId);
     }
 }

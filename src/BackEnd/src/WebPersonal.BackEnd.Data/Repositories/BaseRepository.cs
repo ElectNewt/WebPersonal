@@ -13,12 +13,13 @@ namespace WebPersonal.BackEnd.Model.Repositories
         public abstract string TableName { get; }
         public abstract T? Create(DbDataReader reader);
         //Temporal Until I decide if i go with dapper or EF o que 
-        protected string ConnectionString = "Server=127.0.0.1;Port=3306;Database=WebPersonal;Uid=webPersonalUser;password=webPersonalPass;";
+        protected string ConnectionString = "Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;";
 
         public async Task<T?> GetByUserId(int userId)
         {
             using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
             {
+                conexion.Open();
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conexion;
                 cmd.CommandText = $"select * from {TableName} where UserId = ?userId";
@@ -38,6 +39,7 @@ namespace WebPersonal.BackEnd.Model.Repositories
         {
             using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
             {
+                conexion.Open();
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conexion;
                 cmd.CommandText = $"select * from {TableName} where UserId = ?userId";

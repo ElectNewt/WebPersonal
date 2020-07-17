@@ -1,6 +1,10 @@
 
 CREATE DATABASE IF NOT EXISTS `webpersonal`;
 USE `webpersonal`;
+CREATE USER 'webpersonaluser' IDENTIFIED BY 'webpersonalpass';
+GRANT ALL PRIVILEGES ON * . * TO 'webpersonaluser';
+
+
 
 CREATE TABLE IF NOT EXISTS `academicproject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebPersonal.BackEnd.Model.Repositories;
+using WebPersonal.BackEnd.Service.PerfilPersonal;
+using WebPersonal.BackEnd.ServiceDependencies.Services;
 
 namespace WebPersonal.BackEnd.API
 {
@@ -13,6 +16,15 @@ namespace WebPersonal.BackEnd.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Todo:Move this to their respecives projects 
+            services.AddScoped<IGetPersonalProfileDependencies, GetPersonalProfileDependencies>()
+                .AddScoped<PersonalProfile>()
+                .AddScoped<PersonalProfileRepository>()
+                .AddScoped<SkillRepository>()
+                .AddScoped<InterestsRepository>()
+                .AddScoped<UserIdRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

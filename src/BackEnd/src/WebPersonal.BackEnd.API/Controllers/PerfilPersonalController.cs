@@ -12,12 +12,10 @@ namespace WebPersonal.BackEnd.API.Controllers
     public class PerfilPersonalController : ControllerBase
     {
         private readonly PersonalProfile GetPersonalProfile;
-        private readonly PostPersonalProfile PostPersonalProfile;
 
-        public PerfilPersonalController(PersonalProfile getPersonalProfile, PostPersonalProfile postPersonalProfile)
+        public PerfilPersonalController(PersonalProfile getPersonalProfile)
         {
             GetPersonalProfile = getPersonalProfile;
-            PostPersonalProfile = postPersonalProfile;
         }
 
         [HttpGet("{userName}")]

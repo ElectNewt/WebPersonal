@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\..\Shared\Shaered.ROP\Shared.ROP.csproj" />
     <ProjectReference Include="..\..\..\Shared\Shared.DTO\Shared.DTO.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj" />
+    <ProjectReference Include="..\WebPersonal.BackEnd.ServiceDependencies\WebPersonal.BackEnd.ServiceDependencies.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Service\WebPersonal.BackEnd.Service.csproj" />
   </ItemGroup>
 
