@@ -24,7 +24,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
 
                 dependencies.Setup(a => a.GetUserId(Username))
-                .Returns(Task.FromResult(new UserIdEntity(Username, UserId)));
+                .Returns(Task.FromResult(UserIdEntity.Create(Username, UserId)));
 
                 dependencies.Setup(a => a.GetPersonalProfile(UserId))
                     .Returns(Task.FromResult(GetPersonalProfileEntity(UserId)));
@@ -52,7 +52,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
                 return new List<SkillEntity>()
                 {
                     SkillEntity.Create(UserId, 1, "skill1", 10),
-                    SkillEntity.Create(UserId, 2, "skill2", 9)
+                    SkillEntity.Create(UserId, 2, "skill2", null)
                 };
             }
 
@@ -79,7 +79,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             Assert.Equal(2, result.Value.Skills.Count);
             Assert.Equal("skill1", result.Value.Skills.First().Name);
             Assert.Equal(2, result.Value.Interests.Count);
-            Assert.Equal("interest1", result.Value.Interests.First());
+            Assert.Equal("interest1", result.Value.Interests.First().Interest);
 
         }
 

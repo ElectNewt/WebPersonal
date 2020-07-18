@@ -15,6 +15,8 @@ namespace WebPersonal.Shared.ROP
 
         public static Result<T> Failure<T>(Error error) => new Result<T>(ImmutableArray.Create(error));
 
+        public static Result<T> Failure<T>(string error) => new Result<T>(ImmutableArray.Create(Error.Create(error)));
+
         public static Result<Unit> Success() => new Result<Unit>(Unit);
 
         public static Result<Unit> Failure(ImmutableArray<Error> errors) => new Result<Unit>(errors);
@@ -23,6 +25,8 @@ namespace WebPersonal.Shared.ROP
 
         public static Result<Unit> Failure(Error error) => new Result<Unit>(ImmutableArray.Create(error));
 
+        public static Result<Unit> Failure(string error) => new Result<Unit>(ImmutableArray.Create(Error.Create(error)));
+        
         public static Task<Result<T>> Async<T>(this Result<T> r) => Task.FromResult(r);
 
         public static Task<Result<Unit>> Async(this Result<Unit> r) => _completedUnitAsync;

@@ -76,9 +76,14 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 LastName = values.personalProfile.LastName,
                 GitHub = values.personalProfile.GitHub,
                 UserId = userId.UserId,
+                UserName = userId.UserName,
                 Phone = values.personalProfile.Phone,
                 Website = values.personalProfile.Website,
-                Interests = values.interests.Select(a => a.Description).ToList(),
+                Interests = values.interests.Select(a => new InterestDto()
+                {
+                    Id = a.Id,
+                    Interest = a.Description
+                }).ToList(),
                 Skills = values.skills.Select(a => new SkillDto()
                 {
                     Id = a.Id,

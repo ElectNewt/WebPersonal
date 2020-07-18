@@ -11,24 +11,25 @@ namespace WebPersonal.BackEnd.API.Controllers
     [Route("api/[controller]")]
     public class PerfilPersonalController : ControllerBase
     {
-        private readonly PersonalProfile GetPersonalProfile;
+        private readonly PersonalProfile _getPersonalProfile;
+        private readonly PostPersonalProfile _postPersonalProfile;
 
-        public PerfilPersonalController(PersonalProfile getPersonalProfile)
+        public PerfilPersonalController(PersonalProfile getPersonalProfile, PostPersonalProfile postPersonalProfile)
         {
-            GetPersonalProfile = getPersonalProfile;
+            _getPersonalProfile = getPersonalProfile;
+            _postPersonalProfile = postPersonalProfile;
         }
 
         [HttpGet("{userName}")]
         public async Task<Result<PersonalProfileDto>> Get(string userName)
         {
-            return await GetPersonalProfile.GetPersonalProfileDto(userName);
+            return await _getPersonalProfile.GetPersonalProfileDto(userName);
         }
 
         [HttpPost]
-        public Task<PersonalProfileDto> Post(PersonalProfileDto profileDto)
+        public async Task<Result<PersonalProfileDto>> Post (PersonalProfileDto profileDto)
         {
-            //Guardar perfil en la base de datos.
-            throw new NotImplementedException();
+           return await _postPersonalProfile.Create(profileDto);
         }
 
     }

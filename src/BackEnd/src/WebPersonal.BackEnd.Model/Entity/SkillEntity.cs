@@ -2,12 +2,12 @@
 {
     public class SkillEntity
     {
-        public readonly int UserId;
-        public readonly int Id;
+        public readonly int? UserId;
+        public readonly int? Id;
         public readonly string Name;
-        public readonly int Punctuation;
+        public readonly double? Punctuation;
 
-        private SkillEntity(int userId, int id, string name, int punctuation)
+        private SkillEntity(int? userId, int? id, string name, double? punctuation)
         {
             UserId = userId;
             Id = id;
@@ -15,7 +15,7 @@
             Punctuation = punctuation;
         }
 
-        public static SkillEntity Create(int userId, int id, string name, int punctuation)
+        public static SkillEntity Create(int? userId, int? id, string name, double? punctuation)
             => new SkillEntity(userId, id, name, punctuation);
     }
 }
