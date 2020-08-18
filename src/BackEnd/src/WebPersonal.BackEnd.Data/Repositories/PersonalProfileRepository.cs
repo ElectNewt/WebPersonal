@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories.Queries;
+using WebPersonal.Shared.Data.Db;
 
 namespace WebPersonal.BackEnd.Model.Repositories
 {
@@ -13,7 +14,7 @@ namespace WebPersonal.BackEnd.Model.Repositories
     {
         public override string TableName => TableNames.PersonalProfile;
 
-        public PersonalProfileRepository(DbConnection conexion) : base(conexion)
+        public PersonalProfileRepository(TransactionalWrapper conexion) : base(conexion)
         {
         }
 
@@ -27,12 +28,9 @@ namespace WebPersonal.BackEnd.Model.Repositories
                     $"@{nameof(PersonalProfileEntity.Description)}, @{nameof(PersonalProfileEntity.Phone)}, @{nameof(PersonalProfileEntity.Email)}," +
                     $"@{nameof(PersonalProfileEntity.Website)}, @{nameof(PersonalProfileEntity.GitHub)} );" +
                     $"Select CAST(SCOPE_IDENTITY() as int);";
-            using (var con = _conexion)
-            {
-                con.Open();
-                var newId = (await con.QueryAsync<int>(sql, perfilPersonal)).First();
-                return PersonalProfileEntity.UpdateId(perfilPersonal, newId);
-            }
+            DbConnection connection = await _conexionWrapper.GetConnectionAsync();
+            var newId = (await connection.QueryAsync<int>(sql, perfilPersonal)).First();
+            return PersonalProfileEntity.UpdateId(perfilPersonal, newId);
         }
 
         public async Task<PersonalProfileEntity> Update(PersonalProfileEntity perfilPersonal)
@@ -47,24 +45,18 @@ namespace WebPersonal.BackEnd.Model.Repositories
                     $"{nameof(PersonalProfileEntity.GitHub)} = @{nameof(PersonalProfileEntity.GitHub)}" +
                     $"Where {nameof(PersonalProfileEntity.Id)} = @{nameof(PersonalProfileEntity.UserId)}";
 
-            using (var con = _conexion)
-            {
-                con.Open();
-                int filasAfectadas = await con.ExecuteAsync(sql, perfilPersonal);
-                return perfilPersonal;
-            }
+            DbConnection connection = await _conexionWrapper.GetConnectionAsync();
+            int filasAfectadas = await connection.ExecuteAsync(sql, perfilPersonal);
+            return perfilPersonal;
         }
 
         public async Task<int> Delete(int id)
         {
             string sql = $"delete from {TableName} Where {nameof(PersonalProfileEntity.Id)} = @id";
 
-            using (var con = _conexion)
-            {
-                con.Open();
-                await con.ExecuteAsync(sql, new { id = id });
-                return id;
-            }
+            DbConnection connection = await _conexionWrapper.GetConnectionAsync();
+            await connection.ExecuteAsync(sql, new { id = id });
+            return id;
         }
 
 

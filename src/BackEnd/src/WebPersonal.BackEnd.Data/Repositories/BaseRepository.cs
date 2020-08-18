@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using WebPersonal.Shared.Data.Db;
 
 namespace WebPersonal.BackEnd.Model.Repositories
 {
@@ -10,36 +11,30 @@ namespace WebPersonal.BackEnd.Model.Repositories
         where T : class
     {
 
-        protected readonly DbConnection _conexion;
+        protected readonly TransactionalWrapper _conexionWrapper;
         public abstract string TableName { get; }
 
-        public BaseRepository(DbConnection conexion)
+        public BaseRepository(TransactionalWrapper conexion)
         {
-            _conexion = conexion;
+            _conexionWrapper = conexion;
         }
 
         public async Task<T?> GetByUserId(int userId)
         {
-            using(var con = _conexion)
+            DbConnection connection = await _conexionWrapper.GetConnectionAsync();
+            return await connection.QueryFirstOrDefaultAsync<T?>($"select * from {TableName} where UserId = @userId", new
             {
-                con.Open();
-                return await con.QueryFirstOrDefaultAsync<T?>($"select * from {TableName} where UserId = @userId", new
-                {
-                    userId = userId
-                });
-            }
+                userId = userId
+            });
         }
 
         public async Task<List<T>> GetListByUserId(int userId)
         {
-            using (var con = _conexion)
+            DbConnection connection = await _conexionWrapper.GetConnectionAsync();
+            return (await connection.QueryAsync<T>($"select * from {TableName} where UserId = @userId", new
             {
-                con.Open();
-                return (await con.QueryAsync<T>($"select * from {TableName} where UserId = @userId", new
-                {
-                    userId = userId
-                })).ToList();
-            }
+                userId = userId
+            })).ToList();
         }
     }
 }

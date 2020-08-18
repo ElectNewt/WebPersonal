@@ -2,6 +2,7 @@
 using System.Data.Common;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories.Queries;
+using WebPersonal.Shared.Data.Db;
 
 namespace WebPersonal.BackEnd.Model.Repositories
 {
@@ -9,7 +10,7 @@ namespace WebPersonal.BackEnd.Model.Repositories
     {
         public override string TableName => TableNames.Skill;
 
-        public SkillRepository(DbConnection conexion) : base(conexion)
+        public SkillRepository(TransactionalWrapper conexion) : base(conexion)
         {
         }
     }

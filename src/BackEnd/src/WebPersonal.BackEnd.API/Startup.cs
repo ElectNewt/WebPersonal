@@ -8,6 +8,7 @@ using System.Data.Common;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services;
+using WebPersonal.Shared.Data.Db;
 
 namespace WebPersonal.BackEnd.API
 {
@@ -22,6 +23,7 @@ namespace WebPersonal.BackEnd.API
             //Todo:Move this to their respecives projects 
             services
                 .AddScoped<DbConnection>(x => new MySqlConnection("Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;"))
+                .AddScoped<TransactionalWrapper>()
                 .AddScoped<IGetPersonalProfileDependencies, GetPersonalProfileDependencies>()
                 .AddScoped<PersonalProfile>()
                 .AddScoped<PersonalProfileRepository>()

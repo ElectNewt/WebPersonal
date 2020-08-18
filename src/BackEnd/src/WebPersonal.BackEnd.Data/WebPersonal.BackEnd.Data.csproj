@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Data\Shared.Data.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj" />
   </ItemGroup>
 
