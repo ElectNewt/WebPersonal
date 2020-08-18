@@ -79,6 +79,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 UserName = userId.UserName,
                 Phone = values.personalProfile.Phone,
                 Website = values.personalProfile.Website,
+                Id = values.personalProfile.Id,
                 Interests = values.interests.Select(a => new InterestDto()
                 {
                     Id = a.Id,

@@ -12,12 +12,13 @@ namespace WebPersonal.BackEnd.API.Controllers
     public class PerfilPersonalController : ControllerBase
     {
         private readonly PersonalProfile _getPersonalProfile;
-        private readonly PostPersonalProfile _postPersonalProfile;
+        //Commented for the video about dapper
+       // private readonly PostPersonalProfile _postPersonalProfile;
 
-        public PerfilPersonalController(PersonalProfile getPersonalProfile, PostPersonalProfile postPersonalProfile)
+        public PerfilPersonalController(PersonalProfile getPersonalProfile)//, PostPersonalProfile postPersonalProfile
         {
             _getPersonalProfile = getPersonalProfile;
-            _postPersonalProfile = postPersonalProfile;
+           // _postPersonalProfile = postPersonalProfile;
         }
 
         [HttpGet("{userName}")]
@@ -26,11 +27,11 @@ namespace WebPersonal.BackEnd.API.Controllers
             return await _getPersonalProfile.GetPersonalProfileDto(userName);
         }
 
-        [HttpPost]
-        public async Task<Result<PersonalProfileDto>> Post (PersonalProfileDto profileDto)
-        {
-           return await _postPersonalProfile.Create(profileDto);
-        }
+        //[HttpPost]
+        //public async Task<Result<PersonalProfileDto>> Post (PersonalProfileDto profileDto)
+        //{
+        //   return await _postPersonalProfile.Create(profileDto);
+        //}
 
     }
 

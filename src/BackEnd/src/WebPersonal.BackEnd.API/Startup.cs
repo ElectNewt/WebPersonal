@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySql.Data.MySqlClient;
+using System.Data.Common;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services;
@@ -18,12 +20,16 @@ namespace WebPersonal.BackEnd.API
             services.AddControllers();
 
             //Todo:Move this to their respecives projects 
-            services.AddScoped<IGetPersonalProfileDependencies, GetPersonalProfileDependencies>()
+            services
+                .AddScoped<DbConnection>(x => new MySqlConnection("Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;"))
+                .AddScoped<IGetPersonalProfileDependencies, GetPersonalProfileDependencies>()
                 .AddScoped<PersonalProfile>()
                 .AddScoped<PersonalProfileRepository>()
                 .AddScoped<SkillRepository>()
                 .AddScoped<InterestsRepository>()
-                .AddScoped<UserIdRepository>();
+                .AddScoped<UserIdRepository>()
+                ;
+
 
         }
 

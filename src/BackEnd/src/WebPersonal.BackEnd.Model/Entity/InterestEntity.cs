@@ -6,9 +6,9 @@
         public readonly int? UserId;
         public readonly string Description;
 
-        private InterestEntity(int? id, int? userId, string description)
+        protected InterestEntity(int? id, int? userid, string description)
         {
-            UserId = userId;
+            UserId = userid;
             Description = description;
             Id = id;
         }

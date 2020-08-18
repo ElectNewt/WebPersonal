@@ -5,17 +5,17 @@
         public readonly int? UserId;
         public readonly int? Id;
         public readonly string Name;
-        public readonly double? Punctuation;
+        public readonly decimal? Punctuation;
 
-        private SkillEntity(int? userId, int? id, string name, double? punctuation)
+        protected SkillEntity(int? id, int? userid, string name, decimal? punctuation)
         {
-            UserId = userId;
+            UserId = userid;
             Id = id;
             Name = name;
             Punctuation = punctuation;
         }
 
-        public static SkillEntity Create(int? userId, int? id, string name, double? punctuation)
-            => new SkillEntity(userId, id, name, punctuation);
+        public static SkillEntity Create(int? userId, int? id, string name, decimal? punctuation)
+            => new SkillEntity(id, userId, name, punctuation);
     }
 }

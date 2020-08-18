@@ -13,24 +13,26 @@ namespace WebPersonal.BackEnd.Model.Entity
         public readonly string Website;
         public readonly string GitHub;
 
-        private PersonalProfileEntity(int userId, int? id, string firstName, string lastName, string description,
-            string phone, string email, string website, string gitHub)
+        protected PersonalProfileEntity(int? id, int userid, string firstname, string description, string phone, string email,
+            string lastname, string website, string github)
         {
-            UserId = userId;
+            UserId = userid;
             Id = id;
-            FirstName = firstName;
-            LastName = lastName;
+            FirstName = firstname;
+            LastName = lastname;
             Description = description;
             Phone = phone;
             Email = email;
             Website = website;
-            GitHub = gitHub;
+            GitHub = github;
         }
-
+ 
         public static PersonalProfileEntity Create(int userId, int? id, string firstName, string lastName, string description,
             string phone, string email, string website, string gitHub)
-            => new PersonalProfileEntity(userId, id, firstName, lastName, description, phone, email, website, gitHub);
+            => new PersonalProfileEntity(id, userId, firstName, description, phone, email, lastName, website, gitHub);
 
-
+        public static PersonalProfileEntity UpdateId(PersonalProfileEntity perfilPersonal, int id)=> 
+            new PersonalProfileEntity(id, perfilPersonal.UserId, perfilPersonal.FirstName, perfilPersonal.Description, perfilPersonal.Phone,
+                perfilPersonal.Email, perfilPersonal.LastName, perfilPersonal.Website, perfilPersonal.GitHub);
     }
 }

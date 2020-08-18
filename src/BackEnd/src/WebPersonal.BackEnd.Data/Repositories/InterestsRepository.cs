@@ -7,11 +7,10 @@ namespace WebPersonal.BackEnd.Model.Repositories
 {
     public class InterestsRepository : BaseRepository<InterestEntity>
     {
-        public override string TableName => TableNames.Interest;
-
-        public override InterestEntity Create(DbDataReader reader)
+        public InterestsRepository(DbConnection conexion) : base(conexion)
         {
-            throw new NotImplementedException();
         }
+
+        public override string TableName => TableNames.Interest;
     }
 }

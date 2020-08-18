@@ -9,9 +9,8 @@ namespace WebPersonal.BackEnd.Model.Repositories
     {
         public override string TableName => TableNames.Skill;
 
-        public override SkillEntity Create(DbDataReader reader)
+        public SkillRepository(DbConnection conexion) : base(conexion)
         {
-            throw new NotImplementedException();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace WebPersonal.Shared.Dto
         /// <summary>
         /// How good do you consider yourself at this skill.
         /// </summary>
-        public double? Punctuation { get; set; }
+        public decimal? Punctuation { get; set; }
     }
 
     public class InterestDto

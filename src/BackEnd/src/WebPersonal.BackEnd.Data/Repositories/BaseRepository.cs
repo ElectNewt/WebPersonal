@@ -1,7 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Dapper;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebPersonal.BackEnd.Model.Repositories
@@ -10,52 +10,36 @@ namespace WebPersonal.BackEnd.Model.Repositories
         where T : class
     {
 
+        protected readonly DbConnection _conexion;
         public abstract string TableName { get; }
-        public abstract T? Create(DbDataReader reader);
-        //Temporal Until I decide if i go with dapper or EF o que 
-        protected string ConnectionString = "Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;";
+
+        public BaseRepository(DbConnection conexion)
+        {
+            _conexion = conexion;
+        }
 
         public async Task<T?> GetByUserId(int userId)
         {
-            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            using(var con = _conexion)
             {
-                conexion.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conexion;
-                cmd.CommandText = $"select * from {TableName} where UserId = ?userId";
-                cmd.Parameters.Add("?userId", MySqlDbType.Int32).Value = userId;
-                T? result = null;
-                DbDataReader reader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
-
-                while (await reader.ReadAsync())
+                con.Open();
+                return await con.QueryFirstOrDefaultAsync<T?>($"select * from {TableName} where UserId = @userId", new
                 {
-                    result = Create(reader);
-                }
-                return result;
+                    userId = userId
+                });
             }
         }
 
         public async Task<List<T>> GetListByUserId(int userId)
         {
-            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            using (var con = _conexion)
             {
-                conexion.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conexion;
-                cmd.CommandText = $"select * from {TableName} where UserId = ?userId";
-                cmd.Parameters.Add("?userId", MySqlDbType.Int32).Value = userId;
-                List<T> result = new List<T>();
-                DbDataReader reader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
-
-                while (await reader.ReadAsync())
+                con.Open();
+                return (await con.QueryAsync<T>($"select * from {TableName} where UserId = @userId", new
                 {
-                    T? conversion = Create(reader);
-                    if (conversion != null)
-                        result.Add(conversion);
-                }
-                return result;
+                    userId = userId
+                })).ToList();
             }
         }
-
     }
 }

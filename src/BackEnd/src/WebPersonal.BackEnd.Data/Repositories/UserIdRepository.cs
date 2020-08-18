@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -13,30 +14,19 @@ namespace WebPersonal.BackEnd.Model.Repositories
     {
         public override string TableName => TableNames.UserId;
 
-        public override UserIdEntity Create(DbDataReader reader)
+        public UserIdRepository(DbConnection conexion) : base(conexion)
         {
-            return UserIdEntity.Create(reader[nameof(UserIdEntity.UserName)].ToString() ?? "",
-               Convert.ToInt32(reader[nameof(PersonalProfileEntity.UserId)]));
         }
-
 
         public async Task<UserIdEntity?> GetByUserName(string userName)
         {
-            using (MySqlConnection conexion = new MySqlConnection(ConnectionString))
+            using (var con = _conexion)
             {
-                conexion.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conexion;
-                cmd.CommandText = $"select * from {TableName} where UserName = ?UserName";
-                cmd.Parameters.Add("?UserName", MySqlDbType.VarChar).Value = userName;
-                UserIdEntity? result = null;
-                DbDataReader reader = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
-
-                while (await reader.ReadAsync())
+                con.Open();
+                return await con.QueryFirstOrDefaultAsync<UserIdEntity?>($"select * from {TableName} where UserName = @userName", new
                 {
-                    result = Create(reader);
-                }
-                return result;
+                    userName = userName
+                });
             }
         }
     }
