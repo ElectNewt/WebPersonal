@@ -12,12 +12,12 @@ using Xunit;
 
 namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 {
-    public class Test_PostPersonalProfile
+    public class Test_PutPersonalProfile
     {
         public class TestState
         {
-            public Mock<IPostPersonalProfileDependencies> _dependencies;
-            public PostPersonalProfile Subject;
+            public Mock<IPutPersonalProfileDependencies> _dependencies;
+            public PutPersonalProfile Subject;
             public string Username = "NombreUsuario";
             public int UserId = 123;
             public readonly PersonalProfileDto DefaultPersonalProfile;
@@ -28,16 +28,16 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
                 var entities = DefaultPersonalProfile.MapToEntities();
 
-                Mock<IPostPersonalProfileDependencies> dependencies = new Mock<IPostPersonalProfileDependencies>();
+                Mock<IPutPersonalProfileDependencies> dependencies = new Mock<IPutPersonalProfileDependencies>();
+                //TODO: modify the scenario to test as well updates.
+                dependencies.Setup(a => a.InsertPersonalProfile(It.IsAny<PersonalProfileEntity>()))
+                    .Returns(entities.personalProfile.Success().Async());
 
-                dependencies.Setup(a => a.SavePersonalProfile(It.IsAny<PersonalProfileEntity>()))
-                    .Returns(entities.Item1.Success().Async());
+                dependencies.Setup(a => a.InsertInterests(It.IsAny<List<InterestEntity>>()))
+                    .Returns(entities.interestEntities.Success().Async());
 
-                dependencies.Setup(a => a.SaveInterests(It.IsAny<List<InterestEntity>>()))
-                    .Returns(entities.Item3.Success().Async());
-
-                dependencies.Setup(a => a.SaveSkills(It.IsAny<List<SkillEntity>>()))
-                    .Returns(entities.Item2.Success().Async());
+                dependencies.Setup(a => a.InsertSkills(It.IsAny<List<SkillEntity>>()))
+                    .Returns(entities.skillEntities.Success().Async());
 
                 dependencies.Setup(a => a.CommitTransaction())
                     .Returns(Task.CompletedTask);
@@ -47,11 +47,9 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
                 _dependencies = dependencies;
 
-                Subject = new PostPersonalProfile(_dependencies.Object);
+                Subject = new PutPersonalProfile(_dependencies.Object);
 
             }
-
-
 
             private PersonalProfileDto BuildPersonalProfile()
             {

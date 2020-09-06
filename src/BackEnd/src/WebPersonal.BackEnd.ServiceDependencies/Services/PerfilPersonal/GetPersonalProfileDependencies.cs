@@ -4,7 +4,7 @@ using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 
-namespace WebPersonal.BackEnd.ServiceDependencies.Services
+namespace WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal
 {
     public class GetPersonalProfileDependencies : IGetPersonalProfileDependencies
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.Shared.Dto;
@@ -7,8 +8,12 @@ namespace WebPersonal.BackEnd.Service.Mappers
 {
     public static class PersonalProfileDtoMapper
     {
-        public static (PersonalProfileEntity, List<SkillEntity>, List<InterestEntity>) MapToEntities(this PersonalProfileDto profileDto)
+        public static PostPersonalProfileWrapper MapToEntities(this PersonalProfileDto profileDto)
         {
+            if(profileDto.UserId == null)
+            {
+                throw new Exception("Your are trying to build an entity with a null user, that cannot be done");
+            }
 
             PersonalProfileEntity personalProfile = PersonalProfileEntity.Create((int)profileDto.UserId, profileDto.Id, profileDto.FirstName, profileDto.LastName, profileDto.Description,
                 profileDto.Phone, profileDto.Email, profileDto.Website, profileDto.GitHub);
@@ -17,8 +22,21 @@ namespace WebPersonal.BackEnd.Service.Mappers
 
             List<InterestEntity> interests = profileDto.Interests.Select(a => InterestEntity.Create(a.Id, profileDto.UserId, a.Interest)).ToList();
 
-            return (personalProfile, skills, interests);
+            return new PostPersonalProfileWrapper(personalProfile, skills, interests);
         }
 
+    }
+    public class PostPersonalProfileWrapper
+    {
+        public readonly PersonalProfileEntity personalProfile;
+        public readonly List<SkillEntity> skillEntities;
+        public readonly List<InterestEntity> interestEntities;
+
+        public PostPersonalProfileWrapper(PersonalProfileEntity personalProfile, List<SkillEntity> skillEntities, List<InterestEntity> interestEntities)
+        {
+            this.personalProfile = personalProfile;
+            this.skillEntities = skillEntities;
+            this.interestEntities = interestEntities;
+        }
     }
 }

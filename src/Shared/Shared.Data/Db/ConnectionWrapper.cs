@@ -22,17 +22,29 @@ namespace WebPersonal.Shared.Data.Db
         {
             if (c != default(CancellationToken))
             {
-                return await GetConnectionAsync(true, true, c);
+                return await GetOpenConnectionOrOpenNewConnectionAsync(true, true, c);
             }
 
+            // if cancellation token not specified, create one for 10 seconds
             using (var cts = new CancellationTokenSource())
             {
                 cts.CancelAfter(10000);
-                return await GetConnectionAsync(true, true, cts.Token);
+                return await GetOpenConnectionOrOpenNewConnectionAsync(true, true, cts.Token);
             }
         }
 
-        protected Task<DbConnection> GetConnectionAsync(bool async, bool openIfNotOpenAlready, CancellationToken c)
+        public DbConnection GetConnection()
+        {
+            var connTask = GetOpenConnectionOrOpenNewConnectionAsync(false, true, default(CancellationToken));
+            connTask.Wait();
+
+            return connTask.Result;
+        }
+
+        /// <summary>Get connection using async or non async model</summary>
+        /// <param name="async">If true, will run async. If false, will run synchronusly and wrap the result in a task.</param>
+        /// <param name="openIfNotOpenAlready">If true, will open the connection and return it if there is none. If false, returns null if the connection is not open</param>
+        protected Task<DbConnection> GetOpenConnectionOrOpenNewConnectionAsync(bool async, bool openIfNotOpenAlready, CancellationToken c)// = default(CancellationToken))
         {
             lock (_lock)
             {
@@ -53,12 +65,14 @@ namespace WebPersonal.Shared.Data.Db
                 return _noConnection;
             }
 
+            // open a connection async and return
             async Task<DbConnection> BuildConnectionAsync()
             {
                 await _connection.OpenAsync(c);
                 return _connection;
             }
 
+            // open a connection NOT async and return, wrapped in a task
             Task<DbConnection> BuildConnection()
             {
                 _connection.Open();

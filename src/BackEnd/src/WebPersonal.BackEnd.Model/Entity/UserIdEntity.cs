@@ -13,5 +13,8 @@
 
         public static UserIdEntity Create(string userName, int userId) =>
             new UserIdEntity(userId, userName);
+
+        public static UserIdEntity UpdateUserId(int userId, UserIdEntity userIdEntity) =>
+            new UserIdEntity(userId, userIdEntity.UserName);
     }
 }

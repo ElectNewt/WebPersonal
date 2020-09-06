@@ -15,5 +15,8 @@
 
         public static InterestEntity Create(int? id, int? userId, string description) =>
             new InterestEntity(id, userId, description);
+
+        public static InterestEntity UpdateId(InterestEntity entity, int id ) =>
+            new InterestEntity(id, entity.UserId, entity.Description);
     }
 }

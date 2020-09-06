@@ -17,5 +17,8 @@
 
         public static SkillEntity Create(int? userId, int? id, string name, decimal? punctuation)
             => new SkillEntity(id, userId, name, punctuation);
+
+        public static SkillEntity UpdateId(SkillEntity skill, int id) =>
+            new SkillEntity(id, skill.UserId, skill.Name, skill.Punctuation);
     }
 }

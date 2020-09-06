@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.Shared.Dto;
 using WebPersonal.Shared.ROP;
-#nullable enable
 
 namespace WebPersonal.BackEnd.Service.PerfilPersonal
 {
