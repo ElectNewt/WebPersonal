@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebPersonal.BackEnd.Model.Entity;
@@ -29,6 +30,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
         {
 
             Result<UserIdEntity> userId = await GetUserId(name);
+            
 
             return await userId.Async()
                 .ThenCombine(GetPersonalProfileInfo)
@@ -37,26 +39,24 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .GetCombined()
                 .MapAsync(x => Map(x, userId.Value));
         }
-
-
         private async Task<Result<UserIdEntity>> GetUserId(string name)
         {
             var userIdentty = await _dependencies.GetUserId(name);
-            return userIdentty == null ?
+            return userIdentty == null || userIdentty.UserId == null?
                 Result.Failure<UserIdEntity>(Error.Create("UserIdentity no encontrado"))
                 : userIdentty;
         }
 
 
         private async Task<Result<List<InterestEntity>>> GetInterests(UserIdEntity user) =>
-            await _dependencies.GetInterests(user.UserId);
+            await _dependencies.GetInterests(Convert.ToInt32(user.UserId));
 
         private async Task<Result<List<SkillEntity>>> GetSkills(UserIdEntity user) =>
-            await _dependencies.GetSkills(user.UserId);
+            await _dependencies.GetSkills(Convert.ToInt32(user.UserId));
 
         private async Task<Result<PersonalProfileEntity>> GetPersonalProfileInfo(UserIdEntity user)
         {
-            var personalProfile = await _dependencies.GetPersonalProfile(user.UserId);
+            var personalProfile = await _dependencies.GetPersonalProfile(Convert.ToInt32(user.UserId));
 
             return personalProfile == null ?
                  Result.Failure<PersonalProfileEntity>(Error.Create("personal profile no encontrado"))

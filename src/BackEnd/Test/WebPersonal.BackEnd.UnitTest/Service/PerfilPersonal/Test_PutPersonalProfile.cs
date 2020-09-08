@@ -26,7 +26,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             {
                 DefaultPersonalProfile = BuildPersonalProfile();
 
-                var entities = DefaultPersonalProfile.MapToEntities();
+                var entities = DefaultPersonalProfile.MapToWraperEntities();
 
                 Mock<IPutPersonalProfileDependencies> dependencies = new Mock<IPutPersonalProfileDependencies>();
                 //TODO: modify the scenario to test as well updates.

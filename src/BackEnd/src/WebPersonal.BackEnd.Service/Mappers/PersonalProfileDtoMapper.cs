@@ -8,7 +8,7 @@ namespace WebPersonal.BackEnd.Service.Mappers
 {
     public static class PersonalProfileDtoMapper
     {
-        public static PostPersonalProfileWrapper MapToEntities(this PersonalProfileDto profileDto)
+        public static PostPersonalProfileWrapper MapToWraperEntities(this PersonalProfileDto profileDto)
         {
             if(profileDto.UserId == null)
             {
@@ -23,6 +23,12 @@ namespace WebPersonal.BackEnd.Service.Mappers
             List<InterestEntity> interests = profileDto.Interests.Select(a => InterestEntity.Create(a.Id, profileDto.UserId, a.Interest)).ToList();
 
             return new PostPersonalProfileWrapper(personalProfile, skills, interests);
+        }
+
+        public static PersonalProfileEntity Map(this PersonalProfileDto profileDto, int userId)
+        {
+            return PersonalProfileEntity.Create(userId, profileDto.Id, profileDto.FirstName, profileDto.LastName, profileDto.Description,
+                profileDto.Phone, profileDto.Email, profileDto.Website, profileDto.GitHub);
         }
 
     }

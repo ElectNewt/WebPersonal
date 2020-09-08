@@ -28,21 +28,28 @@ namespace WebPersonal.BackEnd.Model.Repositories
 
         public override async Task<UserIdEntity> InsertSingle(UserIdEntity obj)
         {
-            string sql = $"insert into {TableName} ({nameof(UserIdEntity.UserName)}) " +
+            string sql = $"insert into {TableName} ({nameof(UserIdEntity.UserName).ToLower()}) " +
                       $"values (@{nameof(UserIdEntity.UserName)});" +
-                      $"Select CAST(SCOPE_IDENTITY() as int);";
+                      $"SELECT LAST_INSERT_ID();";
             DbConnection connection = await _conexionWrapper.GetConnectionAsync();
-            var newId = (await connection.QueryAsync<int>(sql, obj)).First();
+            var newId = (await connection.QueryAsync<int>(sql, new
+            {
+                UserName = obj.UserName
+            })).First();
             return UserIdEntity.UpdateUserId(newId, obj);
         }
 
         public override async Task<UserIdEntity> UpdateSingle(UserIdEntity obj)
         {
             string sql = $"Update {TableName} " +
-                  $"set {nameof(UserIdEntity.UserName)} = @{nameof(UserIdEntity.UserName)} " +
-                      $"Where {nameof(UserIdEntity.UserId)} = @{nameof(UserIdEntity.UserId)}";
+                  $"set {nameof(UserIdEntity.UserName).ToLower()} = @{nameof(UserIdEntity.UserName)} " +
+                      $"Where {nameof(UserIdEntity.UserId).ToLower()} = @{nameof(UserIdEntity.UserId)}";
             DbConnection connection = await _conexionWrapper.GetConnectionAsync();
-            int filasAfectadas = await connection.ExecuteAsync(sql, obj);
+            int filasAfectadas = await connection.ExecuteAsync(sql, new
+            {
+                UserName = obj.UserName,
+                UserId = obj.UserId
+            });
             return obj;
         }
     }

@@ -20,21 +20,31 @@ namespace WebPersonal.BackEnd.Model.Repositories
         }
 
 
-        public override async Task<PersonalProfileEntity> InsertSingle(PersonalProfileEntity perfilPersonal)
+        public override async Task<PersonalProfileEntity> InsertSingle(PersonalProfileEntity obj)
         {
-            string sql = $"insert into {TableName} ({nameof(PersonalProfileEntity.UserId)}, {nameof(PersonalProfileEntity.FirstName)}, " +
-                    $"{nameof(PersonalProfileEntity.LastName)}, {nameof(PersonalProfileEntity.Description)}, {nameof(PersonalProfileEntity.Phone)}," +
-                    $"{nameof(PersonalProfileEntity.Email)}, {nameof(PersonalProfileEntity.Website)}, {nameof(PersonalProfileEntity.GitHub)}) " +
+            string sql = $"insert into {TableName} ({nameof(PersonalProfileEntity.UserId).ToLower()}, {nameof(PersonalProfileEntity.FirstName).ToLower()}, " +
+                    $"{nameof(PersonalProfileEntity.LastName).ToLower()}, {nameof(PersonalProfileEntity.Description)}, {nameof(PersonalProfileEntity.Phone).ToLower()}," +
+                    $"{nameof(PersonalProfileEntity.Email).ToLower()}, {nameof(PersonalProfileEntity.Website).ToLower()}, {nameof(PersonalProfileEntity.GitHub).ToLower()}) " +
                     $"values (@{nameof(PersonalProfileEntity.UserId)}, @{nameof(PersonalProfileEntity.FirstName)}, @{nameof(PersonalProfileEntity.LastName)}," +
                     $"@{nameof(PersonalProfileEntity.Description)}, @{nameof(PersonalProfileEntity.Phone)}, @{nameof(PersonalProfileEntity.Email)}," +
                     $"@{nameof(PersonalProfileEntity.Website)}, @{nameof(PersonalProfileEntity.GitHub)} );" +
-                    $"Select CAST(SCOPE_IDENTITY() as int);";
+                    $"SELECT LAST_INSERT_ID();";
             DbConnection connection = await _conexionWrapper.GetConnectionAsync();
-            var newId = (await connection.QueryAsync<int>(sql, perfilPersonal)).First();
-            return PersonalProfileEntity.UpdateId(perfilPersonal, newId);
+            var newId = (await connection.QueryAsync<int>(sql, new
+            {
+                UserId = obj.UserId,
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                Description = obj.Description,
+                Phone = obj.Phone,
+                Email = obj.Email,
+                Website = obj.Website,
+                GitHub = obj.GitHub
+            })).First();
+            return PersonalProfileEntity.UpdateId(obj, newId);
         }
 
-        public override async Task<PersonalProfileEntity> UpdateSingle(PersonalProfileEntity perfilPersonal)
+        public override async Task<PersonalProfileEntity> UpdateSingle(PersonalProfileEntity obj)
         {
             string sql = $"Update {TableName} " +
                 $"set {nameof(PersonalProfileEntity.FirstName).ToLower()} = @{nameof(PersonalProfileEntity.FirstName)}, " +
@@ -47,12 +57,22 @@ namespace WebPersonal.BackEnd.Model.Repositories
                     $"Where {nameof(PersonalProfileEntity.Id).ToLower()} = @{nameof(PersonalProfileEntity.Id)}";
 
             DbConnection connection = await _conexionWrapper.GetConnectionAsync();
-            int filasAfectadas = await connection.ExecuteAsync(sql, perfilPersonal);
-            return perfilPersonal;
+            int filasAfectadas = await connection.ExecuteAsync(sql, new
+            {
+                FirstName = obj.FirstName,
+                LastName = obj.LastName,
+                Description = obj.Description,
+                Phone = obj.Phone,
+                Email = obj.Email,
+                Website = obj.Website,
+                GitHub = obj.GitHub,
+                Id = obj.Id
+            });
+            return obj;
         }
 
-        
 
-        
+
+
     }
 }

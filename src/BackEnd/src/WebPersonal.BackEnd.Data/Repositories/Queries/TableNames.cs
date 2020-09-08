@@ -2,7 +2,7 @@
 {
     internal class TableNames
     {
-        public const string UserId = "UserId";
+        public const string UserId = "userid";
         public const string PersonalProfile = "personalprofile";
         public const string Skill = "skill";
         public const string Interest = "interest";

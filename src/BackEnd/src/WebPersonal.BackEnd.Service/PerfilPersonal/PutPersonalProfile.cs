@@ -78,7 +78,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
 
         private Task<Result<PostPersonalProfileWrapper>> MapToEntities(PersonalProfileDto personalProfile)
         {
-            return personalProfile.MapToEntities().Success().Async();
+            return personalProfile.MapToWraperEntities().Success().Async();
         }
 
         private async Task<Result<PostPersonalProfileWrapper>> SavePersonalProfile(PostPersonalProfileWrapper postPPWraper)

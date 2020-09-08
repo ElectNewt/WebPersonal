@@ -26,6 +26,8 @@ namespace WebPersonal.BackEnd.API
                 .AddScoped<TransactionalWrapper>()
                 .AddScoped<PersonalProfile>()
                 .AddScoped<PutPersonalProfile>()
+                .AddScoped<PostPersonalProfile>()
+                .AddScoped<IPostPersonalProfileDependencies, PostPersonalProfileDependencies>()
                 .AddScoped<IGetPersonalProfileDependencies, GetPersonalProfileDependencies>()
                 .AddScoped<IPutPersonalProfileDependencies, PutPersonalProfileDependencies>()
                 .AddScoped<PersonalProfileRepository>()
