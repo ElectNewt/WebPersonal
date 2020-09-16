@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebPersonal.Shared.Dto;
 
@@ -9,10 +10,30 @@ namespace WebPersonal.BackEnd.API.Controllers
     [ApiController]
     public class AcademicProjectsController : ControllerBase
     {
-        [HttpGet("{id}")]
-        public Task<AcademicProjectsDto> Get(int id)
+        [HttpGet("{userId}")]
+        public Task<AcademicProjectsDto> Get(int userId)
         {
-            throw new NotImplementedException();
+            if (userId != 1)
+                throw new NotImplementedException();
+
+            //TODO: Demo - this is to simulate a real scenario
+            var academicProjets = new AcademicProjectsDto()
+            {
+                Projects = new List<AcademicProjectDto>()
+                {
+                    new AcademicProjectDto()
+                    {
+                        Id=1,
+                        Details = "Aplicación para suibr imagenes a internet, con la posiblidad de retocarlas con filtros y redimensionar",
+                        Environment = new List<string>(){"PHP","JavaScript", "Bootstrap"},
+                        Name = "IMGLovely"
+                    }
+                }
+            };
+
+
+
+            return Task.FromResult(academicProjets);
         }
 
         public Task<AcademicProjectsDto> Post(AcademicProjectsDto projects)
