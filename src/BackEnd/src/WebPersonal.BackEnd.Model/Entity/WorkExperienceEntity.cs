@@ -31,8 +31,11 @@ namespace WebPersonal.BackEnd.Model.Entity
         }
 
         public static WorkExperienceEntity Create(int id, int userId, string position, string companyName, string city, string country,
-            DateTime? startDate, DateTime? endDate, string? environment)
-                => new WorkExperienceEntity(id, userId, position, companyName, city, country, startDate, endDate, environment);
-                
+            DateTime? startDate, DateTime? endDate, string? environment) =>
+            new WorkExperienceEntity(id, userId, position, companyName, city, country, startDate, endDate, environment);
+
+        public static WorkExperienceEntity UpdateId(int id, WorkExperienceEntity entity) =>
+             new WorkExperienceEntity(id, entity.UserId, entity.Position, entity.CompanyName, entity.City, entity.Country, entity.StartDate, entity.EndDate, entity.Environment);
+
     }
 }

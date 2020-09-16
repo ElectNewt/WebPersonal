@@ -21,6 +21,7 @@ namespace WebPersonal.BackEnd.API
             services.AddControllers();
 
             //Todo:Move this to their respecives projects 
+            //Temporal connection until explained different environments.
             services
                 .AddScoped<DbConnection>(x => new MySqlConnection("Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;Allow User Variables=True"))
                 .AddScoped<TransactionalWrapper>()
@@ -34,7 +35,11 @@ namespace WebPersonal.BackEnd.API
                 .AddScoped<SkillRepository>()
                 .AddScoped<InterestsRepository>()
                 .AddScoped<UserIdRepository>()
-                ;
+                .AddScoped<AcademicProjectRepository>()
+                .AddScoped<EducationRespository>()
+                .AddScoped<PersonalProjectsRepository>()
+                .AddScoped<WorkProjectRepository>()
+                .AddScoped<WorkExpereinceRepository>();
 
 
         }

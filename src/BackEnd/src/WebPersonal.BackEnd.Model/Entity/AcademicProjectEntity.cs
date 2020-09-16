@@ -28,5 +28,9 @@ namespace WebPersonal.BackEnd.Model.Entity
         public static AcademicProjectEntity Create(int id, int educationId, int userId, string name, string details, List<string> environment, DateTime? date)
             => new AcademicProjectEntity(id, educationId, userId, name, details, environment, date);
 
+        public static AcademicProjectEntity UpdateId(int id, AcademicProjectEntity academicProjectEntity)
+            => new AcademicProjectEntity(id, academicProjectEntity.EducationId, academicProjectEntity.UserId, academicProjectEntity.Name, academicProjectEntity.Details, 
+                academicProjectEntity.Environment, academicProjectEntity.Date);
+
     }
 }

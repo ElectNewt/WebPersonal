@@ -26,5 +26,8 @@ namespace WebPersonal.BackEnd.Model.Entity
 
         public static PersonalProjectEntity Create(int id, int userId, string name, string details, string? environment, DateTime? date)
             => new PersonalProjectEntity(id, userId, name, details, environment, date);
+
+        public static PersonalProjectEntity UpdateId(int id, PersonalProjectEntity entity) =>
+             new PersonalProjectEntity(id, entity.UserId, entity.Name, entity.Details, entity.Environment, entity.Date);
     }
 }

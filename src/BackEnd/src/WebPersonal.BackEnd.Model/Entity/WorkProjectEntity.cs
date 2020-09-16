@@ -24,7 +24,10 @@ namespace WebPersonal.BackEnd.Model.Entity
             Date = date;
         }
 
-        public static WorkProjectEntity Create(int id, int workId, int userId, string name, string details, string? environment, DateTime? date)
-            => new WorkProjectEntity(id, workId, userId, name, details, environment, date);
+        public static WorkProjectEntity Create(int id, int workId, int userId, string name, string details, string? environment, DateTime? date) => 
+            new WorkProjectEntity(id, workId, userId, name, details, environment, date);
+
+        public static WorkProjectEntity UpdateId(int id, WorkProjectEntity entity) =>
+             new WorkProjectEntity(id, entity.WorkId, entity.UserId, entity.Name, entity.Details, entity.Environment, entity.Date);
     }
 }

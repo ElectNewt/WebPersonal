@@ -1,10 +1,7 @@
 ﻿using Dapper;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories.Queries;
 using WebPersonal.Shared.Data.Db;
@@ -70,9 +67,5 @@ namespace WebPersonal.BackEnd.Model.Repositories
             });
             return obj;
         }
-
-
-
-
     }
 }
