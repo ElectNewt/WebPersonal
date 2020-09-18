@@ -5,7 +5,8 @@ $destino = "Tools/ServerMysql"
 Copy-Item -Path $source -Filter "*.sql" -Recurse -Destination $destino -Container -force
 
 ##Borrar la imagen vieja
-docker rmi --force $(docker images 'server-mysql' -q)
+docker rm $(docker stop $(docker ps -a -q --filter ancestor='server-mysql' --format="{{.ID}}"))
+
 
 
 ##construir la imagen
