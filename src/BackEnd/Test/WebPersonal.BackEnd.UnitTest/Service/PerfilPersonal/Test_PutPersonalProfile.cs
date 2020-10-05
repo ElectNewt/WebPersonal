@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,18 +26,29 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             public TestState()
             {
                 DefaultPersonalProfile = BuildPersonalProfile();
+                IDataProtectionProvider provider = new EphemeralDataProtectionProvider();
+                IDataProtector protector = provider.CreateProtector("test");
 
-                var entities = DefaultPersonalProfile.MapToWraperEntities();
+                var entities = DefaultPersonalProfile.MapToWraperEntities(protector);
 
                 Mock<IPutPersonalProfileDependencies> dependencies = new Mock<IPutPersonalProfileDependencies>();
                 //TODO: modify the scenario to test as well updates.
                 dependencies.Setup(a => a.InsertPersonalProfile(It.IsAny<PersonalProfileEntity>()))
                     .Returns(entities.personalProfile.Success().Async());
 
+                dependencies.Setup(a => a.UpdatePersonalProfile(It.IsAny<PersonalProfileEntity>()))
+                    .Returns(entities.personalProfile.Success().Async());
+
                 dependencies.Setup(a => a.InsertInterests(It.IsAny<List<InterestEntity>>()))
                     .Returns(entities.interestEntities.Success().Async());
 
+                dependencies.Setup(a => a.UpdateInterests(It.IsAny<List<InterestEntity>>()))
+                    .Returns(entities.interestEntities.Success().Async());
+
                 dependencies.Setup(a => a.InsertSkills(It.IsAny<List<SkillEntity>>()))
+                    .Returns(entities.skillEntities.Success().Async());
+
+                dependencies.Setup(a => a.UpdateSkills(It.IsAny<List<SkillEntity>>()))
                     .Returns(entities.skillEntities.Success().Async());
 
                 dependencies.Setup(a => a.CommitTransaction())
@@ -47,7 +59,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
                 _dependencies = dependencies;
 
-                Subject = new PutPersonalProfile(_dependencies.Object);
+                Subject = new PutPersonalProfile(_dependencies.Object, provider);
 
             }
 

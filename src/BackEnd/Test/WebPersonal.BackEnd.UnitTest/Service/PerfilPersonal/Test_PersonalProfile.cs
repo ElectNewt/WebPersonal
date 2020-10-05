@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             {
                 Mock<IGetPersonalProfileDependencies> dependencies = new Mock<IGetPersonalProfileDependencies>();
 
+                IDataProtectionProvider provider = new EphemeralDataProtectionProvider();
 
                 dependencies.Setup(a => a.GetUserId(Username))
                 .Returns(Task.FromResult(UserIdEntity.Create(Username, UserId)));
@@ -37,7 +39,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
                 _dependencies = dependencies;
 
-                Subject = new PersonalProfile(_dependencies.Object);
+                Subject = new PersonalProfile(_dependencies.Object, provider);
 
             }
 

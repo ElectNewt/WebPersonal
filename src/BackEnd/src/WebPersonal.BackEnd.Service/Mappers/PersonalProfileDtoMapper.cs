@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebPersonal.BackEnd.Model.Entity;
@@ -8,15 +9,18 @@ namespace WebPersonal.BackEnd.Service.Mappers
 {
     public static class PersonalProfileDtoMapper
     {
-        public static PostPersonalProfileWrapper MapToWraperEntities(this PersonalProfileDto profileDto)
+        public static PostPersonalProfileWrapper MapToWraperEntities(this PersonalProfileDto profileDto, IDataProtector protector)
         {
             if(profileDto.UserId == null)
             {
                 throw new Exception("Your are trying to build an entity with a null user, that cannot be done");
             }
 
+            string encriptedPhone = protector.Protect(profileDto.Phone);
+            string encriptedEmail = protector.Protect(profileDto.Email);
+
             PersonalProfileEntity personalProfile = PersonalProfileEntity.Create((int)profileDto.UserId, profileDto.Id, profileDto.FirstName, profileDto.LastName, profileDto.Description,
-                profileDto.Phone, profileDto.Email, profileDto.Website, profileDto.GitHub);
+                encriptedPhone, encriptedEmail, profileDto.Website, profileDto.GitHub);
 
             List<SkillEntity> skills = profileDto.Skills.Select(a => SkillEntity.Create(profileDto.UserId, a.Id, a.Name, a.Punctuation)).ToList();
 
@@ -25,10 +29,13 @@ namespace WebPersonal.BackEnd.Service.Mappers
             return new PostPersonalProfileWrapper(personalProfile, skills, interests);
         }
 
-        public static PersonalProfileEntity Map(this PersonalProfileDto profileDto, int userId)
+        public static PersonalProfileEntity Map(this PersonalProfileDto profileDto, int userId, IDataProtector protector)
         {
+            string encriptedPhone = protector.Protect(profileDto.Phone);
+            string encriptedEmail = protector.Protect(profileDto.Email);
+
             return PersonalProfileEntity.Create(userId, profileDto.Id, profileDto.FirstName, profileDto.LastName, profileDto.Description,
-                profileDto.Phone, profileDto.Email, profileDto.Website, profileDto.GitHub);
+                encriptedPhone, encriptedEmail, profileDto.Website, profileDto.GitHub);
         }
 
     }

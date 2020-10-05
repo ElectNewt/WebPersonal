@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebPersonal.BackEnd.Model.Entity;
@@ -20,10 +21,12 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
     public class PostPersonalProfile
     {
         private readonly IPostPersonalProfileDependencies _dependencies;
+        private readonly IDataProtector _protector;
 
-        public PostPersonalProfile(IPostPersonalProfileDependencies dependencies)
+        public PostPersonalProfile(IPostPersonalProfileDependencies dependencies, IDataProtectionProvider provider)
         {
             _dependencies = dependencies;
+            _protector = provider.CreateProtector("PersonalProfile.Protector");
         }
 
         public async Task<Result<UserIdEntity>> Create(PersonalProfileDto personalProfile)
@@ -43,7 +46,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
 
         private async Task<Result<UserIdEntity>> SavePersonalProfile(UserIdEntity user, PersonalProfileDto personalProfile)
         {
-            return await _dependencies.InsertPersonalProfile(personalProfile.Map(Convert.ToInt32(user.UserId)))
+            return await _dependencies.InsertPersonalProfile(personalProfile.Map(Convert.ToInt32(user.UserId), _protector))
                 .MapAsync(_ => user);
         }
 

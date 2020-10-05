@@ -1,0 +1,4 @@
+ALTER TABLE `personalprofile`
+	CHANGE COLUMN `phone` `phone` VARCHAR(200) NULL DEFAULT NULL AFTER `description`,
+	CHANGE COLUMN `email` `email` VARCHAR(200) NULL DEFAULT NULL AFTER `phone`;
+SELECT `DEFAULT_COLLATION_NAME` FROM `information_schema`.`SCHEMATA` WHERE `SCHEMA_NAME`='webpersonal';

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,7 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 Assert.Equal(defaultPRofile.FirstName, userStep2.FirstName);
                 Assert.Equal(defaultPRofile.Website, userStep2.Website);
                 Assert.Equal(defaultPRofile.LastName, userStep2.LastName);
+                Assert.Equal(defaultPRofile.Email, userStep2.Email);
             }
         }
 
@@ -103,7 +105,8 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 .AddScoped<SkillRepository>()
                 .AddScoped<InterestsRepository>()
                 .AddScoped<UserIdRepository>()
-                .AddScoped<PerfilPersonalController>();
+                .AddScoped<PerfilPersonalController>()
+                .AddScoped< IDataProtectionProvider, EphemeralDataProtectionProvider>();
 
             return services;
         }

@@ -19,6 +19,7 @@ namespace WebPersonal.BackEnd.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDataProtection();
 
             //Todo:Move this to their respecives projects 
             //Temporal connection until explained different environments.

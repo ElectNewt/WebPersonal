@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,10 +29,11 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
     public class PutPersonalProfile
     {
         private readonly IPutPersonalProfileDependencies _dependencies;
-
-        public PutPersonalProfile(IPutPersonalProfileDependencies dependencies)
+        private readonly IDataProtector _protector;
+        public PutPersonalProfile(IPutPersonalProfileDependencies dependencies, IDataProtectionProvider provider)
         {
             _dependencies = dependencies;
+            _protector = provider.CreateProtector("PersonalProfile.Protector");
         }
 
 
@@ -78,7 +80,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
 
         private Task<Result<PostPersonalProfileWrapper>> MapToEntities(PersonalProfileDto personalProfile)
         {
-            return personalProfile.MapToWraperEntities().Success().Async();
+            return personalProfile.MapToWraperEntities(_protector).Success().Async();
         }
 
         private async Task<Result<PostPersonalProfileWrapper>> SavePersonalProfile(PostPersonalProfileWrapper postPPWraper)
@@ -104,20 +106,20 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
             async Task<Result<List<SkillEntity>>> DeleteUnusedSkills(List<SkillEntity> skills, int userId)
             {
                 await _dependencies.DeleteUnusedSkills(
-                    skills.Where(a => a.Id != null).Select(a => Convert.ToInt32(a.Id)).Distinct().ToList(), userId);
+                    skills.Where(a => a.Id != null).Select(a => Convert.ToInt32(a.Id)).Distinct().ListOrEmpty(), userId);
 
                 return skills;
             }
 
             async Task<Result<List<SkillEntity>>> UpdateSkills(List<SkillEntity> skills)
             {
-                return (await _dependencies.UpdateSkills(skills.Where(a => a.Id != null).ToList()))
+                return (await _dependencies.UpdateSkills(skills.Where(a => a.Id != null).ListOrEmpty()))
                     .Map(_ => skills);
             }
 
             async Task<Result<List<SkillEntity>>> InsertSkills(List<SkillEntity> skills)
             {
-                return (await _dependencies.InsertSkills(skills.Where(a => a.Id == null).ToList()))
+                return (await _dependencies.InsertSkills(skills.Where(a => a.Id == null).ListOrEmpty()))
                     .Map(_ => skills);
             }
         }
@@ -135,20 +137,20 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
             async Task<Result<List<InterestEntity>>> DeleteUnusedInterests(List<InterestEntity> interests, int userId)
             {
                 await _dependencies.DeleteUnusedInterests(
-                    interests.Where(a => a.Id != null).Select(a => Convert.ToInt32(a.Id)).Distinct().ToList(), userId);
+                    interests.Where(a => a.Id != null).Select(a => Convert.ToInt32(a.Id)).Distinct().ListOrEmpty(), userId);
 
                     return interests;
             }
 
             async Task<Result<List<InterestEntity>>> UpdateInterests(List<InterestEntity> interests)
             {
-                return (await _dependencies.UpdateInterests(interests.Where(a => a.Id != null).ToList()))
+                return (await _dependencies.UpdateInterests(interests.Where(a => a.Id != null).ListOrEmpty()))
                     .Map(_ => interests);
             }
 
             async Task<Result<List<InterestEntity>>> InsertInterests(List<InterestEntity> interests)
             {
-                return (await _dependencies.InsertInterests(interests.Where(a => a.Id == null).ToList()))
+                return (await _dependencies.InsertInterests(interests.Where(a => a.Id == null).ListOrEmpty()))
                     .Map(_ => interests);
             }
         }

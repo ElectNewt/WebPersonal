@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="3.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shaered.ROP\Shared.ROP.csproj" />
     <ProjectReference Include="..\..\..\Shared\Shared.DTO\Shared.DTO.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj" />

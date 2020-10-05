@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WebPersonal.Shared.ROP
 {
@@ -12,5 +13,9 @@ namespace WebPersonal.Shared.ROP
             return string.Join(separator, strings);
         }
 
+        public static List<T> ListOrEmpty<T>(this IEnumerable<T> list)
+        {
+            return list.Any() ? list.ToList() : new List<T>();
+        }
     }
 }

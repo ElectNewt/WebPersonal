@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,10 +20,12 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
     public class PersonalProfile
     {
         private readonly IGetPersonalProfileDependencies _dependencies;
+        private readonly IDataProtector _protector;
 
-        public PersonalProfile(IGetPersonalProfileDependencies dependencies)
+        public PersonalProfile(IGetPersonalProfileDependencies dependencies, IDataProtectionProvider provider)
         {
             _dependencies = dependencies;
+            _protector = provider.CreateProtector("PersonalProfile.Protector");
         }
 
 
@@ -70,13 +73,13 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
             PersonalProfileDto profile = new PersonalProfileDto()
             {
                 Description = values.personalProfile.Description,
-                Email = values.personalProfile.Email,
+                Email = _protector.Unprotect(values.personalProfile.Email),
                 FirstName = values.personalProfile.FirstName,
                 LastName = values.personalProfile.LastName,
                 GitHub = values.personalProfile.GitHub,
                 UserId = userId.UserId,
                 UserName = userId.UserName,
-                Phone = values.personalProfile.Phone,
+                Phone = _protector.Unprotect(values.personalProfile.Phone),
                 Website = values.personalProfile.Website,
                 Id = values.personalProfile.Id,
                 Interests = values.interests.Select(a => new InterestDto()
