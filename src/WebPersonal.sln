@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.BackEnd.Integra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{ED8C1571-5D02-44C5-9197-F7F8C167B736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.FrontEnd.WebApp", "FrontEnd\WebPersonal.FrontEnd.WebApp\WebPersonal.FrontEnd.WebApp.csproj", "{9704141E-8D18-4F30-81FF-9BD6BA93CCCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.FrontEnd.WebApp", "FrontEnd\WebPersonal.FrontEnd.WebApp\WebPersonal.FrontEnd.WebApp.csproj", "{9704141E-8D18-4F30-81FF-9BD6BA93CCCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

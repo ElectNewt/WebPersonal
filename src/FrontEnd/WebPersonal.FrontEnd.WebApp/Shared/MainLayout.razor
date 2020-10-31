@@ -10,6 +10,14 @@
     </div>
 
     <div class="content px-4">
-        @Body
+        <CascadingValue Name="borde" Value="Bordercolor">
+            <CascadingValue Name="background" Value="BackgroundColor">
+                @Body
+            </CascadingValue>
+        </CascadingValue>
     </div>
 </div>
+@code{
+    private readonly string Bordercolor="red";
+    private readonly string BackgroundColor = "cyan";
+}

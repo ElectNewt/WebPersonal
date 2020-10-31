@@ -1,7 +1,20 @@
 ﻿@page "/"
+@using WebPersonal.FrontEnd.WebApp.Componentes 
+@using WebPersonal.Shared.Dto;
 
-<h1>Hello, world!</h1>
+<PerfilPersonal PersonalProfile="profile"></PerfilPersonal>
+<ExperienciaLaboral></ExperienciaLaboral>
+<Educacion></Educacion>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+    PersonalProfileDto profile = new PersonalProfileDto()
+    {
+        Description = "Ejemplo descripción",
+        Phone = "911-1234567",
+        FirstName = "Net",
+        LastName = "Mentor",
+        Email = "info@netmentor.es",
+        GitHub = "/ElectNewt",
+        Website = "netmentor.es"
+    };
+}
