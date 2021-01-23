@@ -1,20 +1,6 @@
 ﻿@page "/"
 @using WebPersonal.FrontEnd.WebApp.Componentes 
-@using WebPersonal.Shared.Dto;
 
-<PerfilPersonal PersonalProfile="profile"></PerfilPersonal>
-<ExperienciaLaboral></ExperienciaLaboral>
-<Educacion></Educacion>
-
-@code{
-    PersonalProfileDto profile = new PersonalProfileDto()
-    {
-        Description = "Ejemplo descripción",
-        Phone = "911-1234567",
-        FirstName = "Net",
-        LastName = "Mentor",
-        Email = "info@netmentor.es",
-        GitHub = "/ElectNewt",
-        Website = "netmentor.es"
-    };
-}
+<PerfilPersonal Profile="ivanabad"></PerfilPersonal>
+@*<ExperienciaLaboral></ExperienciaLaboral>
+<Educacion></Educacion>*@

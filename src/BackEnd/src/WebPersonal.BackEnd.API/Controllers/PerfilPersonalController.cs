@@ -23,6 +23,11 @@ namespace WebPersonal.BackEnd.API.Controllers
         }
 
         [HttpGet("{userName}")]
+        public async Task<PersonalProfileDto> GetByName(string userName)
+        {
+            return (await Get(userName)).Valor;
+        }
+
         public async Task<Result<PersonalProfileDto>> Get(string userName)
         {
             return await _getPersonalProfile.GetPersonalProfileDto(userName);

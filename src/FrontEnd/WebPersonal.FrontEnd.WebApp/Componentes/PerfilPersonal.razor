@@ -1,39 +1,57 @@
 ﻿@using WebPersonal.Shared.Dto;
+@using System.Text.Json;
+@inject IHttpClientFactory ClientFactory
+@if (PersonalProfile != null)
+{
+    <div>
+        <div class="row">
+            <div class="col-sm-12 text-center">@PersonalProfile.FirstName @PersonalProfile.LastName</div>
+        </div>
+    </div>
 
-<div>
+    <h3>Perfil Personal</h3>
     <div class="row">
-        <div class="col-sm-12 text-center">@PersonalProfile.FirstName @PersonalProfile.LastName</div>
+        <div class="col-sm-12">
+            @PersonalProfile.Description
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-sm-3">
+            <b>Teléfono:</b> @PersonalProfile.Phone
+        </div>
+        <div class="col-sm-3">
+            <b>Email:</b> @PersonalProfile.Email
+        </div>
+        <div class="col-sm-3">
+            <b>GitHub:</b> @PersonalProfile.GitHub
+        </div>
+        <div class="col-sm-3">
+            <b>Página web:</b> <a href="@PersonalProfile.Website">@PersonalProfile.Website</a>
+        </div>
+    </div>
+}
 
-<h3>Perfil Personal</h3>
-<div class="row">
-    <div class="col-sm-12">
-        @PersonalProfile.Description
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-3">
-        <b>Teléfono:</b> @PersonalProfile.Phone
-    </div>
-    <div class="col-sm-3" style="border: 1px solid @BorderColor">
-        <b>Email:</b> @PersonalProfile.Email
-    </div>
-    <div class="col-sm-3" style="background-color: @BackgroundColor">
-        <b>GitHub:</b> @PersonalProfile.GitHub
-    </div>
-    <div class="col-sm-3">
-        <b>Website:</b> <a href="https://@PersonalProfile.Website">@PersonalProfile.Website</a>
-    </div>
-</div>
 
 @code {
+
     [Parameter]
+    public string Profile { get; set; }
+    
     public PersonalProfileDto PersonalProfile { get; set; }
 
-    [CascadingParameter(Name ="borde")]
-    public string BorderColor { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
 
-    [CascadingParameter(Name = "background")]
-    public string BackgroundColor { get; set; }
+        PersonalProfile = await GetPersonalProfile(Profile);
+    }
+
+    private async Task<PersonalProfileDto> GetPersonalProfile(string profileCode)
+    {
+        var client = ClientFactory.CreateClient("BackendApi");
+        return await client.GetFromJsonAsync<PersonalProfileDto>($"api/perfilpersonal/{profileCode}", new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+    }
+
 }

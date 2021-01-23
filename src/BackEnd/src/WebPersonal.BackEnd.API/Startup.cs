@@ -18,8 +18,11 @@ namespace WebPersonal.BackEnd.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.AddDataProtection();
+            
+            
 
             //Todo:Move this to their respecives projects 
             //Temporal connection until explained different environments.
@@ -51,9 +54,17 @@ namespace WebPersonal.BackEnd.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
+            
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) // allow any origin
+                 .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {
@@ -63,6 +74,8 @@ namespace WebPersonal.BackEnd.API
                 });
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }
