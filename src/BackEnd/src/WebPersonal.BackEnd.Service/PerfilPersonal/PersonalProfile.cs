@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebPersonal.BackEnd.Model.Entity;
+using WebPersonal.BackEnd.Translations;
 using WebPersonal.Shared.Dto;
+using WebPersonal.Shared.Language.Extensions;
 using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.Service.PerfilPersonal
@@ -21,11 +24,14 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
     {
         private readonly IGetPersonalProfileDependencies _dependencies;
         private readonly IDataProtector _protector;
+        private readonly TraduccionErrores _traduccionErrores;
 
-        public PersonalProfile(IGetPersonalProfileDependencies dependencies, IDataProtectionProvider provider)
+        public PersonalProfile(IGetPersonalProfileDependencies dependencies, IDataProtectionProvider provider, 
+            IHttpContextAccessor httpcontextAccessor)
         {
             _dependencies = dependencies;
             _protector = provider.CreateProtector("PersonalProfile.Protector");
+            _traduccionErrores = new TraduccionErrores(httpcontextAccessor.HttpContext.Request.Headers.GetCultureInfo());
         }
 
 
@@ -34,7 +40,6 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
 
             Result<UserIdEntity> userId = await GetUserId(name);
             
-
             return await userId.Async()
                 .ThenCombine(GetPersonalProfileInfo)
                 .ThenCombine(GetSkills)
@@ -46,7 +51,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
         {
             var userIdentty = await _dependencies.GetUserId(name);
             return userIdentty == null || userIdentty.UserId == null?
-                Result.Failure<UserIdEntity>(Error.Create("UserIdentity no encontrado"))
+                Result.Failure<UserIdEntity>(Error.Create(_traduccionErrores.IdentityNotFound))
                 : userIdentty;
         }
 
@@ -62,7 +67,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
             var personalProfile = await _dependencies.GetPersonalProfile(Convert.ToInt32(user.UserId));
 
             return personalProfile == null ?
-                 Result.Failure<PersonalProfileEntity>(Error.Create("personal profile no encontrado"))
+                 Result.Failure<PersonalProfileEntity>(Error.Create(_traduccionErrores.PersonalProfile))
                  : personalProfile;
         }
 

@@ -5,7 +5,7 @@ namespace WebPersonal.Shared.ROP
 {
     public class Error
     {
-        public string Mesnaje => Message;
+        public string Mensaje => Message;
         public int? Codigo => ErrorCode;
 
         public readonly string Message;

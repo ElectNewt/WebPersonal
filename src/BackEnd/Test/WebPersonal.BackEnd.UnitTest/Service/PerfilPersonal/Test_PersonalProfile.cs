@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,18 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             public PersonalProfile Subject;
             public string Username = "test";
             public int UserId = 123;
-
+            public readonly IDataProtector _protector;
             public TestState()
             {
                 Mock<IGetPersonalProfileDependencies> dependencies = new Mock<IGetPersonalProfileDependencies>();
 
-                IDataProtectionProvider provider = new EphemeralDataProtectionProvider();
+                Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+                Mock<IHeaderDictionary> headerDictionary = new Mock<IHeaderDictionary>();
+                httpContextAccessor.Setup(a => a.HttpContext.Request.Headers)
+                    .Returns(headerDictionary.Object);
 
+                IDataProtectionProvider provider = new EphemeralDataProtectionProvider();
+                _protector = provider.CreateProtector("PersonalProfile.Protector"); 
                 dependencies.Setup(a => a.GetUserId(Username))
                 .Returns(Task.FromResult(UserIdEntity.Create(Username, UserId)));
 
@@ -39,14 +45,20 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
                 _dependencies = dependencies;
 
-                Subject = new PersonalProfile(_dependencies.Object, provider);
+                Subject = new PersonalProfile(_dependencies.Object, provider, httpContextAccessor.Object);
 
             }
 
             private PersonalProfileEntity GetPersonalProfileEntity(int UserId)
             {
-                return PersonalProfileEntity.Create(UserId, 1, "firstName", "LastName", "Descripción", "Telefono", "email@email.com",
-                    "http://www.netmentor.es", "/ElectNewt");
+                return PersonalProfileEntity.Create(UserId, 1,
+                    "firstName", 
+                    "LastName", 
+                    "Descripción",
+                    _protector.Protect("Telefono"),
+                    _protector.Protect("Mail@mail.com"),
+                    "http://www.netmentor.es", 
+                    "/ElectNewt");
             }
 
             private List<SkillEntity> GetSkills(int UserId)
@@ -100,7 +112,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
             Assert.False(result.Success);
             Assert.Single(result.Errors);
-            Assert.Equal("UserIdentity no encontrado", result.Errors.First().Message);
+            Assert.Equal("Usuario no encontrado", result.Errors.First().Message);
         }
 
 
@@ -117,7 +129,7 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
 
             Assert.False(result.Success);
             Assert.Single(result.Errors);
-            Assert.Equal("personal profile no encontrado", result.Errors.First().Message);
+            Assert.Equal("Perfil personal no encontrado", result.Errors.First().Message);
         }
 
     }

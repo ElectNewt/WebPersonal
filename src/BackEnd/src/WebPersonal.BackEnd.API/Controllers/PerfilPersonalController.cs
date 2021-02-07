@@ -23,13 +23,12 @@ namespace WebPersonal.BackEnd.API.Controllers
         }
 
         [HttpGet("{userName}")]
-        public async Task<PersonalProfileDto> GetByName(string userName)
+        public async Task<ResultDto<PersonalProfileDto>> Get(string userName)
         {
-            return (await Get(userName)).Valor;
+            return (await GetProfile(userName)).MapDto(x=>x);
         }
-
-        public async Task<Result<PersonalProfileDto>> Get(string userName)
-        {
+       
+        private async Task<Result<PersonalProfileDto>> GetProfile(string userName) {
             return await _getPersonalProfile.GetPersonalProfileDto(userName);
         }
 
@@ -37,16 +36,15 @@ namespace WebPersonal.BackEnd.API.Controllers
         public async Task<Result<PersonalProfileDto>> Post(PersonalProfileDto profileDto)
         {
             return await _postPersonalProfile.Create(profileDto)
-                .Bind(x => Get(x.UserName));
+                .Bind(x => GetProfile(x.UserName));
         }
 
         [HttpPut]
         public async Task<Result<PersonalProfileDto>> Put(PersonalProfileDto profileDto)
         {
             return await _putPersonalProfile.Create(profileDto)
-                .Bind(x => Get(x.UserName));
+                .Bind(x => GetProfile(x.UserName));
         }
-
     }
 
 }

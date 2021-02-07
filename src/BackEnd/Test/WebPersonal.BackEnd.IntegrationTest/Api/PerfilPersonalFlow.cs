@@ -33,7 +33,9 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 var departmentAppService = serviceProvider.GetRequiredService<PerfilPersonalController>();
                 await departmentAppService.Post(defaultPRofile);
 
-                PersonalProfileDto userStep1 = await departmentAppService.Get(username).ThrowAsync();
+                ResultDto<PersonalProfileDto> resultUserStep1 = await departmentAppService.Get(username);
+                Assert.Empty(resultUserStep1.Errors);
+                PersonalProfileDto userStep1 = resultUserStep1.Value;
                 Assert.Empty(userStep1.Skills);
                 Assert.Equal(defaultPRofile.FirstName, userStep1.FirstName);
                 Assert.Equal(defaultPRofile.Website, userStep1.Website);
@@ -54,9 +56,10 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 };
                 userStep1.Interests.Add(interest);
                 var _ =await departmentAppService.Put(userStep1);
-
-                PersonalProfileDto userStep2 = await departmentAppService.Get(username).ThrowAsync();
-
+                //TODO: change back to get
+                ResultDto<PersonalProfileDto> resultUserStep2 = await departmentAppService.Get(username);
+                Assert.Empty(resultUserStep2.Errors);
+                PersonalProfileDto userStep2 = resultUserStep1.Value;
                 Assert.Single(userStep2.Skills);
                 Assert.Equal(skill.Name, userStep2.Skills.First().Name);
                 Assert.Single(userStep2.Interests);

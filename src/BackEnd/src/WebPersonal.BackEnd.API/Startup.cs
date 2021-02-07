@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal;
@@ -21,12 +25,12 @@ namespace WebPersonal.BackEnd.API
             services.AddCors();
             services.AddControllers();
             services.AddDataProtection();
-            
-            
+
 
             //Todo:Move this to their respecives projects 
             //Temporal connection until explained different environments.
             services
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddScoped<DbConnection>(x => new MySqlConnection("Server=127.0.0.1;Port=3306;Database=webpersonal;Uid=webpersonaluser;password=webpersonalpass;Allow User Variables=True"))
                 .AddScoped<TransactionalWrapper>()
                 .AddScoped<PersonalProfile>()
@@ -44,6 +48,7 @@ namespace WebPersonal.BackEnd.API
                 .AddScoped<PersonalProjectsRepository>()
                 .AddScoped<WorkProjectRepository>()
                 .AddScoped<WorkExpereinceRepository>();
+                
 
 
         }
@@ -56,7 +61,7 @@ namespace WebPersonal.BackEnd.API
                 app.UseDeveloperExceptionPage();
 
             }
-            
+
 
             app.UseRouting();
 

@@ -1,5 +1,6 @@
 ﻿@using WebPersonal.Shared.Dto;
 @using System.Text.Json;
+@using WebPersonal.Shared.ROP;
 @inject IHttpClientFactory ClientFactory
 @if (PersonalProfile != null)
 {
@@ -30,25 +31,30 @@
         </div>
     </div>
 }
-
+@*Todo: build something to print the erros per component*@
 
 @code {
 
     [Parameter]
     public string Profile { get; set; }
-    
+
     public PersonalProfileDto PersonalProfile { get; set; }
+
+    public List<ErrorDto> Erros { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-
-        PersonalProfile = await GetPersonalProfile(Profile);
+        var result = await GetPersonalProfile(Profile);
+        if (result.Success)
+            PersonalProfile = result.Value;
+        else
+            Erros = result.Errors;
     }
 
-    private async Task<PersonalProfileDto> GetPersonalProfile(string profileCode)
+    private async Task<ResultDto<PersonalProfileDto>> GetPersonalProfile(string profileCode)
     {
         var client = ClientFactory.CreateClient("BackendApi");
-        return await client.GetFromJsonAsync<PersonalProfileDto>($"api/perfilpersonal/{profileCode}", new JsonSerializerOptions
+        return await client.GetFromJsonAsync<ResultDto<PersonalProfileDto>>($"api/perfilpersonal/{profileCode}", new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         });
