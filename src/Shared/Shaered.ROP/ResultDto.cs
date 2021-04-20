@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WebPersonal.Shared.ROP
 {
@@ -6,7 +7,7 @@ namespace WebPersonal.Shared.ROP
     {
         public T Value { get; set; }
         public List<ErrorDto> Errors { get; set; }
-        public bool Success => Errors.Count > 0;
+        public bool Success => Errors.Any();
 
     }
 

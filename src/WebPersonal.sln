@@ -31,9 +31,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{ED
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.FrontEnd.WebApp", "FrontEnd\WebPersonal.FrontEnd.WebApp\WebPersonal.FrontEnd.WebApp.csproj", "{9704141E-8D18-4F30-81FF-9BD6BA93CCCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Language", "Shared\Shared.Language\Shared.Language.csproj", "{83A0A87E-0901-4C89-A259-DE4788F8DDEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Language", "Shared\Shared.Language\Shared.Language.csproj", "{83A0A87E-0901-4C89-A259-DE4788F8DDEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.BackEnd.Translations", "BackEnd\src\WebPersonal.BackEnd.Translations\WebPersonal.BackEnd.Translations.csproj", "{451BF7BD-FFF3-422A-A853-143F377D6B8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.BackEnd.Translations", "BackEnd\src\WebPersonal.BackEnd.Translations\WebPersonal.BackEnd.Translations.csproj", "{451BF7BD-FFF3-422A-A853-143F377D6B8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

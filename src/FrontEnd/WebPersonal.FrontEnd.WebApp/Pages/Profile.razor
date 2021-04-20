@@ -1,0 +1,9 @@
+﻿@page "/perfil/{Name}"
+@using WebPersonal.FrontEnd.WebApp.Componentes
+
+<PerfilPersonal Profile="@Name"></PerfilPersonal>
+
+@code{
+    [Parameter]
+    public string Name { get; set; }
+}
