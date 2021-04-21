@@ -12,19 +12,27 @@ namespace WebPersonal.FrontEnd.WebApp.Componentes
 {
     public partial class PerfilPersonal
     {
-
         [Inject]
         private IHttpClientFactory ClientFactory { get; set; }
-
         [Parameter]
         public string Profile { get; set; }
-
+        private string _profileValue { get; set; } //Propiedad privada para almacenar el valor actual
         public PersonalProfileDto PersonalProfile { get; set; }
-
         public List<ErrorDto> Erros { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
+            if (_profileValue != Profile) //Comparamos el valor, y si es distinto, consultamos la información
+            {
+                await CalculateProfile();
+            }
+
+            await base.OnParametersSetAsync();
+        }
+
+        private async Task CalculateProfile()
+        {
+            _profileValue = Profile; //ASignamos el valor
             var result = await GetPersonalProfile(Profile);
             if (!result.Errors.Any())
                 PersonalProfile = result.Value;
