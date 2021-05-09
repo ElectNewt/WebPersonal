@@ -7,7 +7,7 @@ namespace WebPersonal.Shared.ROP
     {
         public T Value { get; set; }
         public List<ErrorDto> Errors { get; set; }
-        public bool Success => Errors.Any();
+        public bool Success { get; set; }
 
     }
 

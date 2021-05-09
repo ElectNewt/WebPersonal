@@ -15,14 +15,16 @@ namespace WebPersonal.Shared.ROP
                 return new ResultDto<TResult>()
                 {
                     Value = mapper(input.Value),
-                    Errors = new List<ErrorDto>()
+                    Errors = new List<ErrorDto>(),
+                    Success = true
                 };
             }
 
             return new ResultDto<TResult>()
             {
                 Value = null,
-                Errors = input.Errors.Select(ErrorDto.FromError).ToList()
+                Errors = input.Errors.Select(ErrorDto.FromError).ToList(),
+                Success = false
             };
         }
 
@@ -37,14 +39,16 @@ namespace WebPersonal.Shared.ROP
                 return new ResultDto<TResult>()
                 {
                     Value = await mapper(r.Value),
-                    Errors = new List<ErrorDto>()
+                    Errors = new List<ErrorDto>(),
+                    Success = true
                 };
             }
 
             return new ResultDto<TResult>()
             {
                 Value = null,
-                Errors = r.Errors.Select(ErrorDto.FromError).ToList()
+                Errors = r.Errors.Select(ErrorDto.FromError).ToList(),
+                Success = false
             };
         }
     }

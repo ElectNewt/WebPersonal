@@ -1,0 +1,48 @@
+﻿<style>
+    .oculto {
+        display: none;
+    }
+
+    .visible {
+        display: inherit;
+    }
+</style>
+
+<h3>Contacto</h3>
+<div class="alert alert-success @MessageBoxCss" role="alert">
+    <h4 class="alert-heading">Mensaje enviado correctamente</h4>
+    <p>Gracias por contactar con el equipo de netmentor, nos pondremos en contacto lo mas rápido posible.</p>
+</div>
+<div class="@FormCss">
+    <EditForm Model="_contact" OnSubmit="Enviar" >
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="name" class="col-md-2 col-form-label">Nombre:</label>
+            <div class="col-md-10">
+                <InputText id="name" class="form-control" @bind-Value="_contact.Name" />
+                <ValidationMessage For="@(() => _contact.Name)" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="surname" class="col-md-2 col-form-label">Apellido:</label>
+            <div class="col-md-10">
+                <InputText id="surname" class="form-control" @bind-Value="_contact.Surname" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-md-2 col-form-label">Email:</label>
+            <div class="col-md-10">
+                <InputText id="email" class="form-control" @bind-Value="_contact.Email" />
+                <ValidationMessage For="@(() => _contact.Email)" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="message" class="col-md-2 col-form-label">mensaje:</label>
+            <div class="col-md-10">
+                <InputTextArea rows="5" id="message" class="form-control" @bind-Value="_contact.Message" />
+                <ValidationMessage For="@(() => _contact.Message)" />
+            </div>
+        </div>
+        <button type="submit">Enviar formulario </button>
+    </EditForm>
+</div>
