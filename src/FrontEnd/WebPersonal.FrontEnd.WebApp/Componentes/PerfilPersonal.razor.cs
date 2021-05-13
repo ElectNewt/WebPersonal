@@ -16,6 +16,8 @@ namespace WebPersonal.FrontEnd.WebApp.Componentes
         private IHttpClientFactory ClientFactory { get; set; }
         [Parameter]
         public string Profile { get; set; }
+        [Parameter]
+        public EventCallback<string> OnClick { get; set; }
         private string _profileValue { get; set; } //Propiedad privada para almacenar el valor actual
         public PersonalProfileDto PersonalProfile { get; set; }
         public List<ErrorDto> Erros { get; set; }

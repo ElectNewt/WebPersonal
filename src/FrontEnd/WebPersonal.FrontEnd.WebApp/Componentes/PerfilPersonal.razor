@@ -1,5 +1,6 @@
 ﻿@if (PersonalProfile != null)
 {
+    <button @onclick="@(() => OnClick.InvokeAsync($"Perfil del usuario {PersonalProfile.FirstName} {PersonalProfile.LastName} (enviado desde el hijo)."))">Lanzar evento padre</button>
     <div>
         <div class="row">
             <div class="col-sm-12 text-center">@PersonalProfile.FirstName @PersonalProfile.LastName</div>
@@ -26,5 +27,6 @@
             <b>Página web:</b> <a href="@PersonalProfile.Website">@PersonalProfile.Website</a>
         </div>
     </div>
+
 }
 

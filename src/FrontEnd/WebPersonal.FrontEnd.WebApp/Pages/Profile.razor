@@ -1,10 +1,21 @@
 ﻿@page "/perfil/{Name}"
 @using WebPersonal.FrontEnd.WebApp.Componentes
 
-<PerfilPersonal Profile="@Name"></PerfilPersonal>
+<!-- Parent Component -->
+<div>@Mensaje</div>
 
-<Contacto/>
+
+<PerfilPersonal Profile="@Name"  OnClick="ClickCallback"></PerfilPersonal>
+
+<Contacto />
 @code{
     [Parameter]
     public string Name { get; set; }
+
+    public string Mensaje = "Este es el mensaje en el elemento padre";
+
+    void ClickCallback(string mensajeNuevo)
+    {
+        Mensaje = mensajeNuevo;
+    }
 }
