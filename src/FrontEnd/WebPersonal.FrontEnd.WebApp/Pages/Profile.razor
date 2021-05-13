@@ -1,11 +1,13 @@
 ﻿@page "/perfil/{Name}"
 @using WebPersonal.FrontEnd.WebApp.Componentes
+@inject StateContainer stateContainer
+@implements IDisposable
 
 <!-- Parent Component -->
-<div>@Mensaje</div>
+<div class="@stateContainer.SelectedCssClass">@Mensaje</div>
 
 
-<PerfilPersonal Profile="@Name"  OnClick="ClickCallback"></PerfilPersonal>
+<PerfilPersonal Profile="@Name" OnClick="ClickCallback"></PerfilPersonal>
 
 <Contacto />
 @code{
@@ -18,4 +20,16 @@
     {
         Mensaje = mensajeNuevo;
     }
+
+
+    protected override void OnInitialized()
+    {
+        stateContainer.CambiarColor += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        stateContainer.CambiarColor -= StateHasChanged;
+    }
+
 }

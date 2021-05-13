@@ -1,0 +1,11 @@
+﻿@inject StateContainer stateContainer
+
+<button @onclick="SetCssNormal">Rojo</button>
+
+@code {
+
+    void SetCssNormal()
+    {
+        stateContainer.AsignarColorCss("rojo");
+    }
+}

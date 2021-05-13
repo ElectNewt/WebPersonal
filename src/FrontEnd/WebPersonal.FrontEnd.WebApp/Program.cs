@@ -23,6 +23,8 @@ namespace WebPersonal.FrontEnd.WebApp
             }
                 );
 
+            builder.Services.AddSingleton<StateContainer>();
+
             await builder.Build().RunAsync();
         }
     }
