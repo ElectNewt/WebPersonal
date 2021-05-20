@@ -1,11 +1,14 @@
 ﻿@page "/perfil/{Name}"
 @using WebPersonal.FrontEnd.WebApp.Componentes
 @inject StateContainer stateContainer
+@inject IJSRuntime jsRuntime
 @implements IDisposable
-
 <!-- Parent Component -->
 <div class="@stateContainer.SelectedCssClass">@Mensaje</div>
 
+<button @onclick="EjecutarJs">Ejecutar JavaScript</button>
+
+<button onclick="window.LlamarCSharp()">Llamar C# desde JS</button>
 
 <PerfilPersonal Profile="@Name" OnClick="ClickCallback"></PerfilPersonal>
 
@@ -30,6 +33,11 @@
     public void Dispose()
     {
         stateContainer.CambiarColor -= StateHasChanged;
+    }
+
+    public void EjecutarJs()
+    {
+        jsRuntime.InvokeVoidAsync("MostrarAlerta", "Mensaje enviado desde c# a Js");
     }
 
 }
