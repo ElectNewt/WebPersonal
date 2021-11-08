@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Language", "Shared\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPersonal.BackEnd.Translations", "BackEnd\src\WebPersonal.BackEnd.Translations\WebPersonal.BackEnd.Translations.csproj", "{451BF7BD-FFF3-422A-A853-143F377D6B8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPersonal.Backend.EmailService", "BackEnd\src\WebPersonal.Backend.EmailService\WebPersonal.Backend.EmailService.csproj", "{54D571E5-F86C-4D15-AD9C-484D798EC917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{451BF7BD-FFF3-422A-A853-143F377D6B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{451BF7BD-FFF3-422A-A853-143F377D6B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{451BF7BD-FFF3-422A-A853-143F377D6B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D571E5-F86C-4D15-AD9C-484D798EC917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D571E5-F86C-4D15-AD9C-484D798EC917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D571E5-F86C-4D15-AD9C-484D798EC917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D571E5-F86C-4D15-AD9C-484D798EC917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{9704141E-8D18-4F30-81FF-9BD6BA93CCCA} = {ED8C1571-5D02-44C5-9197-F7F8C167B736}
 		{83A0A87E-0901-4C89-A259-DE4788F8DDEF} = {55A09F36-365E-4216-A9D9-F3FA4D9B4A91}
 		{451BF7BD-FFF3-422A-A853-143F377D6B8C} = {818303EF-4D00-4758-9196-382F23A7E02A}
+		{54D571E5-F86C-4D15-AD9C-484D798EC917} = {818303EF-4D00-4758-9196-382F23A7E02A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC029233-61A7-494D-B0D6-175DB6214669}

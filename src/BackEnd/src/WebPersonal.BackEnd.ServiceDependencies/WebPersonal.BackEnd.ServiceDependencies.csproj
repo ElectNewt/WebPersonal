@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj" />
+    <ProjectReference Include="..\WebPersonal.Backend.EmailService\WebPersonal.Backend.EmailService.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Service\WebPersonal.BackEnd.Service.csproj" />
   </ItemGroup>
 </Project>

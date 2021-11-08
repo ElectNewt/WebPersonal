@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using WebPersonal.Backend.EmailService;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
@@ -15,14 +16,16 @@ namespace WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal
         private readonly SkillRepository _skillRepo;
         private readonly InterestsRepository _interestsRepository;
         private readonly UserIdRepository _userIdRepository;
+        private readonly IEmailSender _emailSender;
 
         public PostPersonalProfileDependencies(PersonalProfileRepository personalProfileRepo, SkillRepository skillRepo,
-           InterestsRepository interestsRepository, UserIdRepository userIdRepository)
+           InterestsRepository interestsRepository, UserIdRepository userIdRepository, IEmailSender emailSender)
         {
             _personalProfileRepo = personalProfileRepo;
             _skillRepo = skillRepo;
             _interestsRepository = interestsRepository;
             _userIdRepository = userIdRepository;
+            _emailSender = emailSender;
         }
 
 
@@ -48,5 +51,8 @@ namespace WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal
 
         public async Task<UserIdEntity> InsertUserId(string name) =>
             await _userIdRepository.InsertSingle(UserIdEntity.Create(name, null));
+
+        public async Task<Result<bool>> SendEmail(string to, string subject, string body) =>
+            await _emailSender.SendEmail(to, subject, body);
     }
 }

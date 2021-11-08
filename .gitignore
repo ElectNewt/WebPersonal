@@ -33,3 +33,4 @@ Thumbs.db
 obj/
 [Rr]elease*/
 .vs
+.idea

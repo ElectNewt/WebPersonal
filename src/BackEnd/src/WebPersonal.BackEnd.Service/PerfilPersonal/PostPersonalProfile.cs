@@ -15,6 +15,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
         Task<Result<PersonalProfileEntity>> InsertPersonalProfile(PersonalProfileEntity personalProfile);
         Task<Result<List<SkillEntity>>> InsertSkills(List<SkillEntity> skills);
         Task<Result<List<InterestEntity>>> InsertInterests(List<InterestEntity> interests);
+        Task<Result<bool>> SendEmail(string to, string subject, string body);
         Task CommitTransaction();
     }
 
@@ -36,7 +37,8 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .Bind(x => SavePersonalProfile(x, personalProfile))
                 .Bind(x => SaveSkills(x, personalProfile))
                 .Bind(x => SaveInterests(x, personalProfile))
-                .Bind(CommitTransaction);
+                .Bind(CommitTransaction)
+                .Then(async _=>await SendConfirmationEmail(personalProfile));//TODO: create then async in the library
         }
 
         private async Task<Result<UserIdEntity>> CreateNewUser(PersonalProfileDto personalProfile)
@@ -67,5 +69,10 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
 
             return user;
         }
+        
+        private Task<Result<bool>>SendConfirmationEmail(PersonalProfileDto personalProfile)
+        =>  _dependencies.SendEmail($"{personalProfile.UserName}@mail.com", "personal profile created",
+                "congratulations");
+        
     }
 }

@@ -1,16 +1,15 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using WebPersonal.BackEnd.API.Settings;
+using WebPersonal.Backend.EmailService;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal;
@@ -21,12 +20,13 @@ namespace WebPersonal.BackEnd.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-       
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -37,8 +37,6 @@ namespace WebPersonal.BackEnd.API
 
             //Todo:Move this to their respecives projects 
             //Temporal connection until explained different environments.
-
-
             services
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddScoped<DbConnection>(x => new MySqlConnection(Database.BuildConnectionString(Configuration)))
@@ -58,9 +56,23 @@ namespace WebPersonal.BackEnd.API
                 .AddScoped<PersonalProjectsRepository>()
                 .AddScoped<WorkProjectRepository>()
                 .AddScoped<WorkExpereinceRepository>();
-                
 
-
+            services.AddSingleton(x =>
+                {
+                    EmailConfiguration emailConfiguration = new EmailConfiguration();
+                    Configuration.Bind("emailService", emailConfiguration);
+                    return emailConfiguration;
+                })
+                .AddScoped<IEmailSender, EmailSender>();
+            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailService"));
+            services.PostConfigure<EmailConfiguration>(emailConfiguration =>
+            {
+                if ( string.IsNullOrWhiteSpace(emailConfiguration.SmtpServer))
+                {
+                    throw new ApplicationException("el campo SmtpServer debe contner información");
+                }
+            });
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,28 +81,22 @@ namespace WebPersonal.BackEnd.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
             }
 
 
             app.UseRouting();
 
             app.UseCors(x => x
-                 .AllowAnyMethod()
-                 .AllowAnyHeader()
-                 .SetIsOriginAllowed(origin => true) // allow any origin
-                 .AllowCredentials());
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
                 endpoints.MapControllers();
             });
-
-            
         }
     }
 }

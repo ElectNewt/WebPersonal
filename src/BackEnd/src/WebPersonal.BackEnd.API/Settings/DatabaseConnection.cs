@@ -16,7 +16,7 @@ namespace WebPersonal.BackEnd.API.Settings
             sb.Append($"Uid={dbSettings.User};");
             sb.Append($"password={dbSettings.Password};");
 
-            if (dbSettings.AllowUserVairables == true)
+            if (dbSettings.AllowUserVariables == true)
             {
                 sb.Append("Allow User Variables=True;");
             }
@@ -33,7 +33,7 @@ namespace WebPersonal.BackEnd.API.Settings
             public string DatabaseName { get; set; }
             public string User { get; set; }
             public string Password { get; set; }
-            public bool AllowUserVairables { get; set; }
+            public bool AllowUserVariables { get; set; }
         }
     }
 }
