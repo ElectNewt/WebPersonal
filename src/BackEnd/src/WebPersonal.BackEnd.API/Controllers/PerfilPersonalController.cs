@@ -9,6 +9,7 @@ namespace WebPersonal.BackEnd.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class PerfilPersonalController : ControllerBase
     {
         private readonly PersonalProfile _getPersonalProfile;
@@ -37,6 +38,13 @@ namespace WebPersonal.BackEnd.API.Controllers
         {
             return await _postPersonalProfile.Create(profileDto)
                 .Bind(x => GetProfile(x.UserName));
+        }
+        
+        [HttpPost("returnonlyid")]
+        public async Task<Result<int?>> PostId(PersonalProfileDto profileDto)
+        {
+            return await _postPersonalProfile.Create(profileDto)
+                .MapAsync(x=>x.UserId);
         }
 
         [HttpPut]

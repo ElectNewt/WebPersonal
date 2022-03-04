@@ -17,7 +17,7 @@ namespace WebPersonal.BackEnd.API.Controllers
                 throw new NotImplementedException();
 
             //TODO: Demo - this is to simulate a real scenario
-            var academicProjets = new AcademicProjectsDto()
+            var academicProjects = new AcademicProjectsDto()
             {
                 Projects = new List<AcademicProjectDto>()
                 {
@@ -31,9 +31,7 @@ namespace WebPersonal.BackEnd.API.Controllers
                 }
             };
 
-
-
-            return Task.FromResult(academicProjets);
+            return Task.FromResult(academicProjects);
         }
 
         public Task<AcademicProjectsDto> Post(AcademicProjectsDto projects)
