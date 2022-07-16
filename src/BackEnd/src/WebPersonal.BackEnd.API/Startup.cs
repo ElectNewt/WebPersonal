@@ -8,11 +8,13 @@ using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
 using Microsoft.Extensions.Options;
+using ROP.ApiExtensions.Translations;
 using WebPersonal.BackEnd.API.Settings;
 using WebPersonal.Backend.EmailService;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal;
+using WebPersonal.BackEnd.Translations;
 using WebPersonal.Shared.Data.Db;
 
 namespace WebPersonal.BackEnd.API
@@ -32,7 +34,10 @@ namespace WebPersonal.BackEnd.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.AddTranslation<TraduccionErrores>(services);
+            } );
             services.AddDataProtection();
 
             //Todo:Move this to their respecives projects 

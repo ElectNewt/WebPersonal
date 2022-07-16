@@ -123,4 +123,7 @@
   <data name="PersonalProfileNotFound" xml:space="preserve">
     <value>Perfil personal no encontrado</value>
   </data>
+  <data name="ce6887fb-f8fa-49b7-bcb4-d8538b6c9932" xml:space="preserve">
+    <value>Ejemplo Error</value>
+  </data>
 </root>
