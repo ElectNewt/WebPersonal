@@ -47,6 +47,7 @@ namespace WebPersonal.BackEnd.API.Controllers
 
         }
 
+        [HttpPost]
         public Task<PersonalProjectsDto> Post(PersonalProjectsDto projects)
         {
             throw new NotImplementedException();

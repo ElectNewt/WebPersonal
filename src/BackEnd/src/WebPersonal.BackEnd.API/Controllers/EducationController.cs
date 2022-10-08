@@ -39,6 +39,7 @@ namespace WebPersonal.BackEnd.API.Controllers
             return Task.FromResult(educationList);
         }
 
+        [HttpPost]
         public Task<EducationDto> Post(EducationDto education)
         {
             throw new NotImplementedException();

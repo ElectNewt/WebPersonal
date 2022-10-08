@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using ROP;
 using ROP.APIExtensions;
+using WebPersonal.BackEnd.API.Filters;
 
 namespace WebPersonal.BackEnd.API.Controllers
 {
@@ -9,6 +10,7 @@ namespace WebPersonal.BackEnd.API.Controllers
     [Route("api/[controller]")]
     public class ExampleErrorController : ControllerBase
     {
+        [AcceptedLanguageHeader(true)] 
         [HttpGet]
         public IActionResult Get()
         {

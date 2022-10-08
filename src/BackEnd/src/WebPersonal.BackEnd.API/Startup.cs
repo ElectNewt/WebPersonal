@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using System.Data.Common;
 using Microsoft.Extensions.Options;
 using ROP.ApiExtensions.Translations;
+using WebPersonal.BackEnd.API.Filters;
+using WebPersonal.BackEnd.API.Middlewares;
 using WebPersonal.BackEnd.API.Settings;
 using WebPersonal.Backend.EmailService;
 using WebPersonal.BackEnd.Model.Repositories;
@@ -61,6 +63,11 @@ namespace WebPersonal.BackEnd.API
                 .AddScoped<PersonalProjectsRepository>()
                 .AddScoped<WorkProjectRepository>()
                 .AddScoped<WorkExpereinceRepository>();
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.OperationFilter<AcceptedLanguageHeader>();
+            });
 
             services.AddSingleton(x =>
                 {
@@ -88,8 +95,11 @@ namespace WebPersonal.BackEnd.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseRouting();
+            app.UseMiddleware<CustomHeaderValidatorMiddleware>(AcceptedLanguageHeader.HeaderName);
 
             app.UseCors(x => x
                 .AllowAnyMethod()

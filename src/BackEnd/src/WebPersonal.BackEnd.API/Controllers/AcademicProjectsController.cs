@@ -34,6 +34,7 @@ namespace WebPersonal.BackEnd.API.Controllers
             return Task.FromResult(academicProjects);
         }
 
+        [HttpPost]
         public Task<AcademicProjectsDto> Post(AcademicProjectsDto projects)
         {
             throw new NotImplementedException();
