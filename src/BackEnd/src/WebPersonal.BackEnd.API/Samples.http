@@ -1,0 +1,25 @@
+﻿@endpoint = https://localhost:5001
+
+### create new user
+POST {{endpoint}}/api/PerfilPersonal
+Content-Type: application/json
+
+{
+  "UserId": null,
+  "Id": null,
+  "UserName": "test-1",
+  "FirstName": "firstName",
+  "LastName": "last name",
+  "Description": "Description",
+  "Phone": "telefono",
+  "Email": "email",
+  "Website": "web",
+  "GitHub": "github",
+  "Interests": [],
+  "Skills": []
+}
+> {% client.global.set("userName", response.body.valor.userName) %}
+
+
+### get user 
+GET {{endpoint}}/api/PerfilPersonal/{{userName}}

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebPersonal.BackEnd.API.Controllers;
 using WebPersonal.BackEnd.Model.Entity;
@@ -30,6 +31,7 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 string username = Guid.NewGuid().ToString();
 
                 PersonalProfileDto defaultPRofile = BuildPersonalProfile(username);
+                
                 var departmentAppService = serviceProvider.GetRequiredService<PerfilPersonalController>();
                 await departmentAppService.Post(defaultPRofile);
 
