@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ROP;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Service.Mappers;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.Service.PerfilPersonal
 {
@@ -38,7 +38,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .Bind(x => SaveSkills(x, personalProfile))
                 .Bind(x => SaveInterests(x, personalProfile))
                 .Bind(CommitTransaction)
-                .Then(async _=>await SendConfirmationEmail(personalProfile));//TODO: create then async in the library
+                .Then(_=>SendConfirmationEmail(personalProfile));
         }
 
         private async Task<Result<UserIdEntity>> CreateNewUser(PersonalProfileDto personalProfile)
@@ -49,19 +49,19 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
         private async Task<Result<UserIdEntity>> SavePersonalProfile(UserIdEntity user, PersonalProfileDto personalProfile)
         {
             return await _dependencies.InsertPersonalProfile(personalProfile.Map(Convert.ToInt32(user.UserId), _protector))
-                .MapAsync(_ => user);
+                .Map(_ => user);
         }
 
         private async Task<Result<UserIdEntity>> SaveSkills(UserIdEntity user, PersonalProfileDto personalProfile)
         {
             return await _dependencies.InsertSkills(personalProfile.Skills.Map(Convert.ToInt32(user.UserId)))
-                .MapAsync(_ => user);
+                .Map(_ => user);
         }
 
         private async Task<Result<UserIdEntity>> SaveInterests(UserIdEntity user, PersonalProfileDto personalProfile)
         {
             return await _dependencies.InsertInterests(personalProfile.Interests.Map(Convert.ToInt32(user.UserId)))
-                .MapAsync(_ => user);
+                .Map(_ => user);
         }
         private async Task<Result<UserIdEntity>> CommitTransaction(UserIdEntity user)
         {

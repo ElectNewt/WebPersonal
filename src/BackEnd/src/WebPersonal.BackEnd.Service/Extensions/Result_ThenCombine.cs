@@ -3,10 +3,11 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
+using ROP;
 
-namespace WebPersonal.Shared.ROP
-{
-    public static class Result_ThenCombine
+namespace WebPersonal.BackEnd.Service.Extensions;
+
+ public static class Result_ThenCombine
     {
         public class Combiner<T, TR>
         {
@@ -133,4 +134,3 @@ namespace WebPersonal.Shared.ROP
             }
         }
     }
-}

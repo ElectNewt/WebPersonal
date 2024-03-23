@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using WebPersonal.Shared.ROP;
+using ROP;
 
 namespace WebPersonal.Backend.EmailService
 {

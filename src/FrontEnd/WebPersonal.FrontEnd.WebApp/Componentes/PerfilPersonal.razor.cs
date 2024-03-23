@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WebPersonal.Shared.Dto;
 using System.Text.Json;
-using WebPersonal.Shared.ROP;
 using System.Net.Http.Json;
 using System.Linq;
+using ROP.APIExtensions;
 
 namespace WebPersonal.FrontEnd.WebApp.Componentes
 {
@@ -39,7 +39,7 @@ namespace WebPersonal.FrontEnd.WebApp.Componentes
             if (!result.Errors.Any())
                 PersonalProfile = result.Value;
             else
-                Erros = result.Errors;
+                Erros = result.Errors.ToList();
         }
 
         private async Task<ResultDto<PersonalProfileDto>> GetPersonalProfile(string profileCode)

@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ROP;
 using WebPersonal.BackEnd.Model.Entity;
+using WebPersonal.BackEnd.Service.Extensions;
 using WebPersonal.BackEnd.Service.Mappers;
 using WebPersonal.BackEnd.Service.Validations;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.Service.PerfilPersonal
 {
@@ -48,7 +49,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                  .Bind(SaveInterests)
                  .Ignore()
                  .Bind(CommitTransaction)
-                 .MapAsync(_ => personalProfile);
+                 .Map(_ => personalProfile);
         }
 
         private Task<Result<PersonalProfileDto>> ValidateUsuerId(PersonalProfileDto personalProfile)
@@ -101,7 +102,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .Bind(x => DeleteUnusedSkills(x, postPPWraper.personalProfile.UserId))
                 .Bind(UpdateSkills)
                 .Bind(InsertSkills)
-                .MapAsync(_ => postPPWraper);
+                .Map(_ => postPPWraper);
 
             async Task<Result<List<SkillEntity>>> DeleteUnusedSkills(List<SkillEntity> skills, int userId)
             {
@@ -132,7 +133,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .Bind(x => DeleteUnusedInterests(x, postPPWraper.personalProfile.UserId))
                 .Bind(UpdateInterests)
                 .Bind(InsertInterests)
-                .MapAsync(_ => postPPWraper);
+                .Map(_ => postPPWraper);
 
             async Task<Result<List<InterestEntity>>> DeleteUnusedInterests(List<InterestEntity> interests, int userId)
             {

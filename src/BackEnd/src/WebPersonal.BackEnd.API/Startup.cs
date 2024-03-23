@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
-using Microsoft.Extensions.Options;
 using ROP.ApiExtensions.Translations;
 using WebPersonal.BackEnd.API.Filters;
 using WebPersonal.BackEnd.API.Middlewares;
@@ -68,6 +67,7 @@ namespace WebPersonal.BackEnd.API
             {
                 c.OperationFilter<AcceptedLanguageHeader>();
             });
+            services.AddHttpContextAccessor();
 
             services.AddSingleton(x =>
                 {

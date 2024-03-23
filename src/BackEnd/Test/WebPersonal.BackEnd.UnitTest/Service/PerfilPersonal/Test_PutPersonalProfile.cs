@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using ROP;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Service.Mappers;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 using Xunit;
 
 namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
@@ -34,33 +32,32 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
                 Mock<IPutPersonalProfileDependencies> dependencies = new Mock<IPutPersonalProfileDependencies>();
                 //TODO: modify the scenario to test as well updates.
                 dependencies.Setup(a => a.InsertPersonalProfile(It.IsAny<PersonalProfileEntity>()))
-                    .Returns(entities.personalProfile.Success().Async());
+                    .ReturnsAsync(entities.personalProfile);
 
                 dependencies.Setup(a => a.UpdatePersonalProfile(It.IsAny<PersonalProfileEntity>()))
-                    .Returns(entities.personalProfile.Success().Async());
+                    .ReturnsAsync(entities.personalProfile);
 
                 dependencies.Setup(a => a.InsertInterests(It.IsAny<List<InterestEntity>>()))
-                    .Returns(entities.interestEntities.Success().Async());
+                    .ReturnsAsync(entities.interestEntities);
 
                 dependencies.Setup(a => a.UpdateInterests(It.IsAny<List<InterestEntity>>()))
-                    .Returns(entities.interestEntities.Success().Async());
+                    .ReturnsAsync(entities.interestEntities);
 
                 dependencies.Setup(a => a.InsertSkills(It.IsAny<List<SkillEntity>>()))
-                    .Returns(entities.skillEntities.Success().Async());
+                    .ReturnsAsync(entities.skillEntities);
 
                 dependencies.Setup(a => a.UpdateSkills(It.IsAny<List<SkillEntity>>()))
-                    .Returns(entities.skillEntities.Success().Async());
+                    .ReturnsAsync(entities.skillEntities);
 
                 dependencies.Setup(a => a.CommitTransaction())
                     .Returns(Task.CompletedTask);
 
                 dependencies.Setup(a => a.GetUser(Username))
-                    .Returns(Task.FromResult(UserIdEntity.Create(Username, UserId)));
+                    .ReturnsAsync(UserIdEntity.Create(Username, UserId));
 
                 _dependencies = dependencies;
 
                 Subject = new PutPersonalProfile(_dependencies.Object, provider);
-
             }
 
             private PersonalProfileDto BuildPersonalProfile()
@@ -96,7 +93,6 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
                     Website = "web"
                 };
             }
-
         }
 
 
@@ -112,7 +108,5 @@ namespace WebPersonal.BackEnd.UnitTest.Service.PerfilPersonal
             Assert.Single(result.Value.Skills);
             Assert.Single(result.Value.Interests);
         }
-
-
     }
 }

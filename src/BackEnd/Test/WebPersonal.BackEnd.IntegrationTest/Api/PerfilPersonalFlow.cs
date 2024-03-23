@@ -5,16 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ROP.APIExtensions;
 using WebPersonal.BackEnd.API.Controllers;
-using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal;
 using WebPersonal.Shared.Data.Db;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 using Xunit;
 
 namespace WebPersonal.BackEnd.IntegrationTest.Api
@@ -35,7 +34,8 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                 var departmentAppService = serviceProvider.GetRequiredService<PerfilPersonalController>();
                 await departmentAppService.Post(defaultPRofile);
 
-                ResultDto<PersonalProfileDto> resultUserStep1 = await departmentAppService.Get(username);
+                IActionResult resultUserStep = await departmentAppService.Get(username);
+                var resultUserStep1 = resultUserStep as ResultDto<PersonalProfileDto>;
                 Assert.Empty(resultUserStep1.Errors);
                 PersonalProfileDto userStep1 = resultUserStep1.Value;
                 Assert.Empty(userStep1.Skills);
@@ -57,9 +57,9 @@ namespace WebPersonal.BackEnd.IntegrationTest.Api
                     Interest = "interes pero debe contener 15 caracteres"
                 };
                 userStep1.Interests.Add(interest);
-                var _ =await departmentAppService.Put(userStep1);
-                //TODO: change back to get
-                ResultDto<PersonalProfileDto> resultUserStep2 = await departmentAppService.Get(username);
+                 _ =await departmentAppService.Put(userStep1);
+                var resultUserStep2o = await departmentAppService.Get(username);
+                ResultDto<PersonalProfileDto> resultUserStep2 = resultUserStep2o as ResultDto<PersonalProfileDto>;
                 Assert.Empty(resultUserStep2.Errors);
                 PersonalProfileDto userStep2 = resultUserStep1.Value;
                 Assert.Single(userStep2.Skills);

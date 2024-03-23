@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ROP;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Model.Repositories;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
-using WebPersonal.Shared.ROP;
-
 namespace WebPersonal.BackEnd.ServiceDependencies.Services.PerfilPersonal
 {
     public class PutPersonalProfileDependencies : IPutPersonalProfileDependencies

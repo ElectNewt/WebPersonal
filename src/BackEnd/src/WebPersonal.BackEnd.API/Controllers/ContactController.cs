@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using ROP;
+using ROP.APIExtensions;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.API.Controllers
 {
@@ -13,13 +11,13 @@ namespace WebPersonal.BackEnd.API.Controllers
     public class ContactController : Controller
     {
         [HttpPost]
-        public Task<ResultDto<ContactResponse>> Post(ContactDto Contacto)
+        public Task<IActionResult> Post(ContactDto Contacto)
         {
             return Task.FromResult(new ContactResponse()
             {
                 MessageSent = true
             }.Success()
-            .MapDto(x => x));
+            .ToActionResult());
         }
     }
 }

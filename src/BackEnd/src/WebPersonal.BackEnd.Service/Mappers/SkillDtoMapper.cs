@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.Shared.Dto;

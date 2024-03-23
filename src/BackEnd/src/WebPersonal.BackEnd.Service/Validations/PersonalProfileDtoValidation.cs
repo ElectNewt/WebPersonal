@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using ROP;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.Service.Validations
 {

@@ -23,3 +23,6 @@ Content-Type: application/json
 
 ### get user 
 GET {{endpoint}}/api/PerfilPersonal/{{userName}}
+
+### failure test (ProblemDetailsExample)
+GET {{endpoint}}/api/Education/test

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
+using ROP;
+using ROP.APIExtensions;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.API.Controllers
 {
@@ -24,9 +24,9 @@ namespace WebPersonal.BackEnd.API.Controllers
         }
 
         [HttpGet("{userName}")]
-        public async Task<ResultDto<PersonalProfileDto>> Get(string userName)
+        public async Task<IActionResult> Get(string userName)
         {
-            return (await GetProfile(userName)).MapDto(x=>x);
+            return await GetProfile(userName).ToActionResult();
         }
        
         private async Task<Result<PersonalProfileDto>> GetProfile(string userName) {
@@ -34,17 +34,18 @@ namespace WebPersonal.BackEnd.API.Controllers
         }
 
         [HttpPost]
-        public async Task<Result<PersonalProfileDto>> Post(PersonalProfileDto profileDto)
+        public async Task<IActionResult> Post(PersonalProfileDto profileDto)
         {
             return await _postPersonalProfile.Create(profileDto)
-                .Bind(x => GetProfile(x.UserName));
+                .Bind(x => GetProfile(x.UserName))
+                .ToActionResult();
         }
         
         [HttpPost("returnonlyid")]
         public async Task<Result<int?>> PostId(PersonalProfileDto profileDto)
         {
             return await _postPersonalProfile.Create(profileDto)
-                .MapAsync(x=>x.UserId);
+                .Map(x=>x.UserId);
         }
 
         [HttpPut]

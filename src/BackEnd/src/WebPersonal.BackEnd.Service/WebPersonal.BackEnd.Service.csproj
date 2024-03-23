@@ -10,10 +10,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Netmentor.ROP" Version="1.0.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Shaered.ROP\Shared.ROP.csproj" />
     <ProjectReference Include="..\..\..\Shared\Shared.DTO\Shared.DTO.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Data\WebPersonal.BackEnd.Data.csproj" />
     <ProjectReference Include="..\WebPersonal.BackEnd.Model\WebPersonal.BackEnd.Model.csproj" />

@@ -1,21 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ROP;
 using WebPersonal.BackEnd.API;
 using WebPersonal.BackEnd.Model.Entity;
 using WebPersonal.BackEnd.Service.PerfilPersonal;
 using WebPersonal.Shared.Dto;
-using WebPersonal.Shared.ROP;
 using Xunit;
 
 namespace WebPersonal.Backend.ApiTest;

@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ROP;
 using WebPersonal.BackEnd.Model.Entity;
+using WebPersonal.BackEnd.Service.Extensions;
 using WebPersonal.BackEnd.Translations;
 using WebPersonal.Shared.Dto;
 using WebPersonal.Shared.Language.Extensions;
-using WebPersonal.Shared.ROP;
 
 namespace WebPersonal.BackEnd.Service.PerfilPersonal
 {
@@ -45,7 +46,7 @@ namespace WebPersonal.BackEnd.Service.PerfilPersonal
                 .ThenCombine(GetSkills)
                 .ThenCombine(GetInterests)
                 .GetCombined()
-                .MapAsync(x => Map(x, userId.Value));
+                .Map(x => Map(x, userId.Value));
         }
         private async Task<Result<UserIdEntity>> GetUserId(string name)
         {
