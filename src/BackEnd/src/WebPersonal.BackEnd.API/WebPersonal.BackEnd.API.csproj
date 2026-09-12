@@ -1,20 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>WebPersonal.BackEnd.API</RootNamespace>
-    <!--
-    issue with the .net 5.0 preview sdk 
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
     <Nullable>enable</Nullable>
+    <!-- Pending nullable warnings (CS8618) in Settings -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-    <PackageReference Include="Netmentor.ROP.ApiExtensions.Translations" Version="1.0.13" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <PackageReference Include="Netmentor.ROP.ApiExtensions.Translations" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
   </ItemGroup>
 
   <ItemGroup>

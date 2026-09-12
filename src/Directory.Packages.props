@@ -1,0 +1,47 @@
+<Project>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="coverlet.collector" Version="3.1.0" />
+    <PackageVersion Include="Dapper" Version="2.0.35" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="3.1.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="3.1.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Features" Version="3.1.7" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="6.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="3.1.7" />
+    <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.7" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="3.1.7" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageVersion Include="Moq" Version="4.14.5" />
+    <PackageVersion Include="MySql.Data" Version="8.0.20" />
+    <PackageVersion Include="Netmentor.ROP" Version="1.0.13" />
+    <PackageVersion Include="Netmentor.ROP.ApiExtensions" Version="1.0.13" />
+    <PackageVersion Include="Netmentor.ROP.ApiExtensions.Translations" Version="1.0.13" />
+    <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageVersion Include="System.Net.Http.Json" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup Label="api">
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Test">
+    <PackageVersion Include="xunit" Version="2.4.1" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.3" />
+  </ItemGroup>
+
+</Project>

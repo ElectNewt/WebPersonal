@@ -1,16 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>WebPersonal.BackEnd.Service</RootNamespace>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Netmentor.ROP" Version="1.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Netmentor.ROP" />
   </ItemGroup>
 
   <ItemGroup>

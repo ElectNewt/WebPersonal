@@ -1,0 +1,9 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Default target framework; Shared.* (netstandard2.0) and the FrontEnd (netstandard2.1) override it -->
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

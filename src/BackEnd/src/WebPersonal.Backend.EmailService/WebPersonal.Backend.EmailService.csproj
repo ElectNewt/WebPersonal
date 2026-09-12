@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <!-- Pending nullable warnings (CS8618) in EmailSender -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.6" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.7" />
-        <PackageReference Include="Netmentor.ROP" Version="1.0.13" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Options" />
+        <PackageReference Include="Netmentor.ROP" versionoverride =""/>
     </ItemGroup>
 
 </Project>
