@@ -1,0 +1,116 @@
+@page "/guestbook"
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Components
+@using WebPersonal.Shared.Dto
+@inject IHttpClientFactory ClientFactory
+
+<div class="guestbook-page">
+    <header class="guestbook-header">
+        <p class="guestbook-eyebrow">A note from you</p>
+        <h1>Visitor guestbook</h1>
+        <p>Leave a message about the portfolio or say hello.</p>
+    </header>
+
+    <section class="guestbook-panel">
+        <h2>Sign the guestbook</h2>
+
+        <EditForm Model="newEntry" OnSubmit="Submit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="guestbook-name">Name</label>
+                <InputText id="visitor-name" class="form-control" @bind-Value="newEntry.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="guestbook-email">Email <span class="text-muted">(kept private)</span></label>
+                <InputText id="guestbook-email" class="form-control" @bind-Value="newEntry.Email" />
+            </div>
+
+            <div class="form-group">
+                <label for="guestbook-message">Message</label>
+                <InputTextArea id="guestbook-message" class="form-control" rows="4" @bind-Value="newEntry.Message" />
+                <small class="text-muted">@MessageLength / 500 characters</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Post message</button>
+        </EditForm>
+    </section>
+
+    <section class="guestbook-list" aria-live="polite">
+        <div class="guestbook-list-heading">
+            <h2>Messages</h2>
+            <input class="form-control guestbook-search"
+                   placeholder="Search messages"
+                   value="@searchText"
+                   @oninput="Search" />
+        </div>
+
+        @if (entries == null)
+        {
+            <p><em>Loading messages...</em></p>
+        }
+        else if (entries.Count == 0)
+        {
+            <p>No messages found.</p>
+        }
+        else
+        {
+            @foreach (GuestbookEntryDto entry in entries)
+            {
+                <article class="guestbook-card">
+                    <div>
+                        <h3>@entry.Name</h3>
+                        <time>@entry.CreatedAt.ToString("dd/MM/yyyy HH:mm")</time>
+                    </div>
+                    <p class="guestbook-message">@((MarkupString)entry.Message)</p>
+                    <span class="guestbook-delete" @onclick="@(() => Delete(entry.Id))">Delete</span>
+                </article>
+            }
+        }
+    </section>
+</div>
+
+@code {
+    private List<GuestbookEntryDto> entries;
+    private GuestbookEntryDto newEntry = new GuestbookEntryDto();
+    private string searchText = "";
+
+    private int MessageLength => newEntry.Message == null ? 0 : newEntry.Message.Length;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient client = ClientFactory.CreateClient("BackendApi");
+        entries = await client.GetFromJsonAsync<List<GuestbookEntryDto>>("api/guestbook");
+    }
+
+    private async Task Search(ChangeEventArgs args)
+    {
+        searchText = args.Value == null ? "" : args.Value.ToString();
+        HttpClient client = ClientFactory.CreateClient("BackendApi");
+        entries = await client.GetFromJsonAsync<List<GuestbookEntryDto>>(
+            "api/guestbook?search=" + searchText);
+    }
+
+    private async Task Submit()
+    {
+        HttpClient client = ClientFactory.CreateClient("BackendApi");
+        HttpResponseMessage response = await client.PostAsJsonAsync("api/guestbook", newEntry);
+        GuestbookEntryDto savedEntry = await response.Content.ReadFromJsonAsync<GuestbookEntryDto>();
+
+        entries.Add(savedEntry);
+        newEntry = new GuestbookEntryDto();
+    }
+
+    private async void Delete(int id)
+    {
+        HttpClient client = ClientFactory.CreateClient("BackendApi");
+        await client.DeleteAsync("api/guestbook/" + id);
+
+        GuestbookEntryDto deletedEntry = entries.First(entry => entry.Id == id);
+        entries.Remove(deletedEntry);
+        StateHasChanged();
+    }
+}
